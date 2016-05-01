@@ -5,10 +5,12 @@
  */
 package rmi;
 
+import rmi_interface.IFinanzaRMI;
+
 /**
  *
  * @author alejandro
  */
-public class ImplementacionFinanzas {
+public class ImplementacionFinanzas implements IFinanzaRMI {
     
 }

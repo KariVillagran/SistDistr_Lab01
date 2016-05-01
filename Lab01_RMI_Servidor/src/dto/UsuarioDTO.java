@@ -17,6 +17,7 @@ public class UsuarioDTO {
     private String userName;
     private String password;
     private String rol;
+    private String nombreCompleto;
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="constructores">
@@ -48,6 +49,10 @@ public class UsuarioDTO {
     public String GetRol(){
         return this.rol;
     }
+    
+    public String GetNombreCompleto(){
+        return this.nombreCompleto;
+    }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="metodos mutadores">
@@ -67,6 +72,10 @@ public class UsuarioDTO {
     
     public void SetRol(String rol){
         this.rol = rol;
+    }
+    
+    public void SetNombreCompleto(String nombreCompleto){
+        this.nombreCompleto = nombreCompleto;
     }
     // </editor-fold>
 }

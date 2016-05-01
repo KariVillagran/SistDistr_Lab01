@@ -73,7 +73,12 @@ public class ServidorRMI {
             //instanciamos el registro
             this.registro = GetRegistro(puerto);
             
-            if(object.getClass().equals(object))
+            if(object.getClass().equals(ImplementacionFinanzas.class)){
+                
+            }
+            else if (object.getClass().equals(ImplementacionRRHH.class)){
+                
+            }
             
             //Si todo lo anterior funciona, la conexión se realizó correctamente
             objResult = true;
