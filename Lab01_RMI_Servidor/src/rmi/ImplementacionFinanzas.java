@@ -5,9 +5,10 @@
  */
 package rmi;
 
-import dataaccess.LoginDA;
+import dto.FinanzaDTO;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 import java.util.logging.Logger;
 import rmi_interface.IFinanzaRMI;
 
@@ -30,4 +31,28 @@ public class ImplementacionFinanzas extends UnicastRemoteObject implements IFina
         logger = Logger.getLogger(getClass().getName());
     }
     // </editor-fold> 
+
+    // <editor-fold defaultstate="collapsed" desc="metodos publicos">
+    // ***
+    // metodos publicos
+    @Override
+    public FinanzaDTO GetFinanzaById(int p_Id) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<FinanzaDTO> GetListaFinanzasByFiltro(FinanzaDTO p_Filtro) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean InsertarFinanza(FinanzaDTO p_Obj) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean UpdateFinanza(FinanzaDTO p_Obj) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    // </editor-fold>
 }

@@ -9,6 +9,7 @@ import dto.RecursoHumanoDTO;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import java.util.logging.Logger;
 import rmi_interface.IRecursoHumanoRMI;
 
 /**
@@ -16,6 +17,13 @@ import rmi_interface.IRecursoHumanoRMI;
  * @author alejandro
  */
 public class ImplementacionRRHH extends UnicastRemoteObject implements IRecursoHumanoRMI {
+    // <editor-fold defaultstate="collapsed" desc="propiedades privadas">
+    // ***
+    // propiedades privadas
+    private static String CPREFIX = "Lab01_RMI_Servidor.rmi.ImplementacionRRHH";
+    private static Logger logger;
+    // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="constructores">
     // ***
     // constructores

@@ -35,7 +35,7 @@ public class Servidor {
     public static ImplementacionRRHH rrhhLocal;
     public static ImplementacionFinanzas finanzasLocal;
     public static String loginRefRemoto = "LoginRefRemoto";
-    public static String rrhhRefRemoto = "RrHhRefRemoto";
+    public static String rrhhRefRemoto = "RrhhRefRemoto";
     public static String finanzasRefRemoto =  "FinanzasRefRemoto";
     // </editor-fold>
     
