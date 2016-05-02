@@ -41,12 +41,16 @@ public class LoginDA {
         String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Obj)]";
         
         UsuarioDTO objResult = null;
-        conexion = new ConexionPostgresql();
-        Connection conn = conexion.IniciarConexion();
+        Connection conn = null; 
         
         try{
             logger.log(Level.INFO, CPREFIX + MPREFIX + "-> Inicio ejecución");
-            
+        
+            // Instanciamos el objeto conexión 
+            conexion = new ConexionPostgresql();
+            // Obtenemos el objeto "Connection" e iniciamos la conexión
+            conn = conexion.IniciarConexion();
+        
             Statement stmt = conn.createStatement();
             
             ResultSet rs = stmt.executeQuery( "select id, " +
@@ -71,15 +75,18 @@ public class LoginDA {
             
             rs.close();
             stmt.close();
-            conn.close();
+            //conn.close();
          
             logger.log(Level.INFO, CPREFIX + MPREFIX + "-> Ejecución finalizada correctamente");
         }
         catch(Exception ex){
             logger.log(Level.SEVERE, CPREFIX + MPREFIX + "-> Error al intentar Validar el Usuario. Detalle: " + ex.getMessage());
-            conn.close();
-            
             throw ex;
+        }
+        finally{
+            if(conn != null){
+                conn.close();
+            }
         }
         
         return objResult;
