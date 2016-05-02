@@ -13,6 +13,7 @@ import java.rmi.registry.Registry;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import rmi_interface.IFinanzaRMI;
+import rmi_interface.ILoginRMI;
 import rmi_interface.IRecursoHumanoRMI;
 import rmi_interface.IUsuarioRMI;
 
@@ -92,7 +93,7 @@ public class ServidorRMI {
                 // Guardamos un registro en el log
                  logger.log(Level.INFO, String.format("{0} {1} {2}", CPREFIX, MPREFIX, "-> Se agregará " + nombre + " con el objecto Usuario"));
                 //De tal manera que aquí se castee la interface que le corresponde
-                registro.rebind(nombre, (IUsuarioRMI)object);
+                registro.rebind(nombre, (ILoginRMI)object);
             }
             
             //Si todo lo anterior funciona, la conexión se realizó correctamente
