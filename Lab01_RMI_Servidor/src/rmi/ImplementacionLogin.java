@@ -8,6 +8,7 @@ package rmi;
 import dataaccess.LoginDA;
 import dto.UsuarioDTO;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import rmi_interface.ILoginRMI;
@@ -16,7 +17,7 @@ import rmi_interface.ILoginRMI;
  *
  * @author alejandro
  */
-public class ImplementacionLogin implements ILoginRMI {
+public class ImplementacionLogin extends UnicastRemoteObject implements ILoginRMI {
     // <editor-fold defaultstate="collapsed" desc="propiedades privadas">
     // ***
     // propiedades privadas
@@ -28,7 +29,7 @@ public class ImplementacionLogin implements ILoginRMI {
     // <editor-fold defaultstate="collapsed" desc="constructores">
     // ***
     // constructores
-    public ImplementacionLogin(){
+    public ImplementacionLogin() throws RemoteException {
         logger = Logger.getLogger(getClass().getName());
     }
     // </editor-fold>

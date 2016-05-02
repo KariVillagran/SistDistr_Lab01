@@ -79,15 +79,35 @@ public class ServidorRMI {
             else if (object.getClass().equals(ImplementacionRRHH.class)){
                 
             }
+            else if (object.getClass().equals(ImplementacionLogin.class)){
+                
+            }
             
             //Si todo lo anterior funciona, la conexión se realizó correctamente
             objResult = true;
         }
         catch(RemoteException ex){
-            logger.log(Level.SEVERE, CPREFIX + MPREFIX + "-> Error al intentar iniciar la conexión. Detalle: " + ex.getMessage());
+            logger.log(Level.SEVERE, CPREFIX + MPREFIX + "-> Error al intentar iniciar la conexión. Detalle: " + ex.getMessage(), ex);
         }
         
         return objResult;
+    }
+    
+    // Quita del registro del servidor la referencia al objeto remoto
+    public void DetenerConexion(String nombreUsado) throws RemoteException {
+        String MPREFIX = " [DetenerConexion(String nombreUsado)]";
+        
+        try {
+            //Se saca de RMI Registry el objeto "Ejemplo-RMI"
+            //El cual ya no estará disponible para ser llamado remotamente
+            registro.unbind(nombreUsado);
+            conectado = false;
+        } 
+        catch (NotBoundException | AccessException ex) {
+            //En caso de haber un error, es mostrado por un mensaje
+            logger.log(Level.SEVERE, CPREFIX + MPREFIX + "-> Error al intentar detener la conexión!", ex);
+            conectado = true;
+        }
     }
     // </editor-fold>
     
