@@ -8,6 +8,7 @@ package dataaccess;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 /**
@@ -18,8 +19,10 @@ public class ConexionPostgresql {
     // <editor-fold defaultstate="collapsed" desc="propiedades privadas">
     // ***
     // propiedades privadas
-    private Connection connection;
-    private String connString;
+    private static ConexionPostgresql conexionPostgresql=null;
+    private static  Connection connection;
+   
+    
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="constructores">
@@ -27,45 +30,58 @@ public class ConexionPostgresql {
     // constructores
     public ConexionPostgresql(){
         // Dejamos estas variables por defecto en null
-        this.connection = null;
-        this.connString = null;
+
     }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="metodos privados">
     // ***
     // metodos privados
-    private void GetConnectionString() throws Exception{
-        try{
-            // Obtenemos el connection string desde un archivo de configuración xml
-            if(this.connString == null){
-                Properties prop = new Properties();
-                prop.loadFromXML(new File("ConfigurationParameters.xml").toURI().toURL().openStream());
-                this.connString = prop.getProperty("connString");
-            }
-        }
-        catch(Exception ex){
-            throw ex;
-        }
-    }
+
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="metodos publicos">
     // ***
     // metodos publicos
-    public Connection IniciarConexion() throws Exception {
-        try{
-            this.GetConnectionString();
-            
+    public  static Connection IniciarConexion() throws ClassNotFoundException, SQLException
+    { 
+      String connectString = "jdbc:postgresql://localhost:5432/sistdis_lab01";
+      String user ="postgres";
+      String password ="usach2016";
             // Iniciamos la conexión
             Class.forName("org.postgresql.Driver");            
-            connection = DriverManager.getConnection(connString);         
-            
-            return this.connection;
-        }
-        catch(Exception ex){
-            throw ex;
-        }
+           // connection = DriverManager.getConnection(connString);
+            connection=DriverManager.getConnection(connectString, user, password);
+            System.out.println("dataaccess.ConexionPostgresql.IniciarConexion() OK");
+            return connection;
+      
+  
     }
     // </editor-fold>
+    
+    
+    public static ConexionPostgresql getInstanceBD() throws Exception
+{
+
+	if(conexionPostgresql==null)
+	{	
+	 conexionPostgresql =new ConexionPostgresql();
+	}
+	return conexionPostgresql;
+	
+}
+
+    /**
+     * @return the connection
+     */
+    public Connection getConnection() {
+        return connection;
+    }
+
+    /**
+     * @param connection the connection to set
+     */
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 }

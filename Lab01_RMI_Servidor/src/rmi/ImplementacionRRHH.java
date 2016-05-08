@@ -5,6 +5,7 @@
  */
 package rmi;
 
+import dataaccess.QueryRRHHJdbc;
 import dto.RecursoHumanoDTO;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -22,6 +23,7 @@ public class ImplementacionRRHH extends UnicastRemoteObject implements IRecursoH
     // propiedades privadas
     private static String CPREFIX = "Lab01_RMI_Servidor.rmi.ImplementacionRRHH";
     private static Logger logger;
+    private  QueryRRHHJdbc q=new QueryRRHHJdbc();
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="constructores">
@@ -36,23 +38,38 @@ public class ImplementacionRRHH extends UnicastRemoteObject implements IRecursoH
     // ***
     // metodos publicos
     @Override
-    public RecursoHumanoDTO GetRecursoHumanoById(int p_Id) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public RecursoHumanoDTO GetRecursoHumanoById(int p_Id) throws Exception {
+        RecursoHumanoDTO resp = q.GetRecursoHumanoById(p_Id);
+        return resp;
     }
 
     @Override
-    public List<RecursoHumanoDTO> GetListRecursoHumanoByFiltro(RecursoHumanoDTO p_Filtro) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<RecursoHumanoDTO> GetListRecursoHumanoAll() throws Exception {
+        List<RecursoHumanoDTO> resp = q.GetListRecursoHumanoAll();
+    
+      return resp;
     }
 
     @Override
-    public boolean InsertRecursoHumano(RecursoHumanoDTO p_Obj) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean InsertRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception {
+        boolean resp = q.InsertRecursoHumano(p_Obj);
+      
+        return resp;
+      
     }
-
     @Override
-    public boolean UpdateRecursoHumano(RecursoHumanoDTO p_Obj) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean UpdateRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception {
+        boolean resp = q.UpdateRecursoHumano(p_Obj);
+          return resp;
+
     }
     // </editor-fold>
+
+    @Override
+    public boolean deleteRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception {
+    boolean resp = q.deleteRecursoHumano(p_Obj);
+  
+        return resp;
+    
+    }
 }

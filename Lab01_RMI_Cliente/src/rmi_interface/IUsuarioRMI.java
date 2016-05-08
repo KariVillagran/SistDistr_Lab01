@@ -5,15 +5,14 @@
  */
 package rmi_interface;
 
-import dto.UsuarioDTO;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 /**
  *
  * @author alejandro
  */
-public interface ILoginRMI extends Remote{
-    // metodo para validar un usuario actual del sistema desde base datos
-    public UsuarioDTO ValidarUsuario(UsuarioDTO p_Usuario) throws Exception;
+public interface IUsuarioRMI extends Remote {
+    //public boolean Insert
 }

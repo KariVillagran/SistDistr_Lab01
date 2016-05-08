@@ -6,6 +6,7 @@
 package rmi;
 
 import dataaccess.LoginDA;
+import dataaccess.QueryUsuarioJdbc;
 import dto.UsuarioDTO;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -42,13 +43,12 @@ public class ImplementacionLogin extends UnicastRemoteObject implements ILoginRM
         String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Usuario)]";
     
         UsuarioDTO objResult = null;
-        
+        QueryUsuarioJdbc queryUsuarioJdbc=new QueryUsuarioJdbc();
         try{
             loginDA = new LoginDA();
-            objResult = loginDA.ValidarUsuario(p_Usuario);
+            objResult = queryUsuarioJdbc.validarUsuario(p_Usuario);
         }
         catch(Exception ex){
-            logger.log(Level.SEVERE, CPREFIX + MPREFIX + "-> Error al intentar validar el usuario. Detalle: " + ex.getMessage());
             throw new RemoteException(ex.getMessage(), ex);
         }
         

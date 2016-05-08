@@ -23,6 +23,6 @@ public interface IRecursoHumanoRMI extends Remote{
     public boolean InsertRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception;
     // metodo para actualizar un registro existente de tipo "RecursoHumanoDTO" en la base de datos
     public boolean UpdateRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception;
-    
-     public boolean deleteRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception;
+    public boolean deleteRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception;
+
 }

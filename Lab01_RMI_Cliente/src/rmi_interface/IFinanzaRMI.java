@@ -15,7 +15,7 @@ import java.util.List;
  * @author alejandro
  */
 public interface IFinanzaRMI extends Remote{
-    // Metodo para obtener una finanza de acuerdo a un determinado Id
+      // Metodo para obtener una finanza de acuerdo a un determinado Id
     public FinanzaDTO GetFinanzaById(int p_Id) throws Exception;
     // Metodo para obtener una lista de finanzas de acuerdo a un determinado filtro
     public List<FinanzaDTO> GetListaFinanzasAll() throws Exception;
@@ -24,4 +24,5 @@ public interface IFinanzaRMI extends Remote{
     // Metodo para actualziar una finanza
     public boolean UpdateFinanza(FinanzaDTO p_Obj) throws Exception;
     public boolean deleteFinanza (FinanzaDTO p_Obj) throws Exception;
+
 }
