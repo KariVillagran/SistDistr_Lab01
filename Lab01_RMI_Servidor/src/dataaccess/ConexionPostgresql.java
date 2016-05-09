@@ -5,6 +5,7 @@
  */
 package dataaccess;
 
+import conf.Parameters;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;

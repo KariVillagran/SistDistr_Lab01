@@ -46,7 +46,7 @@ public class ImplementacionLogin extends UnicastRemoteObject implements ILoginRM
         QueryUsuarioJdbc queryUsuarioJdbc = new QueryUsuarioJdbc();
         try{
             //loginDA = new LoginDA();
-            objResult = queryUsuarioJdbc.validarUsuario(p_Usuario);
+            objResult = queryUsuarioJdbc.ValidarUsuario(p_Usuario);
         }
         catch(Exception ex){
             throw new RemoteException(ex.getMessage(), ex);

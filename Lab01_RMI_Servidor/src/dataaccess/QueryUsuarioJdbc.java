@@ -18,13 +18,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import rmi_interface.IFinanzaRMI;
+import rmi_interface.ILoginRMI;
 import rmi_interface.IUsuarioRMI;
 
 /**
  *
  * @author alejandro
  */
-public class QueryUsuarioJdbc implements IUsuarioRMI{
+public class QueryUsuarioJdbc implements ILoginRMI{
     // <editor-fold defaultstate="collapsed" desc="propiedades privadas">
     // ***
     // propiedades privadas
@@ -36,11 +37,12 @@ public class QueryUsuarioJdbc implements IUsuarioRMI{
     
     // <editor-fold defaultstate="collapsed" desc="validar usuario">
     // metodo para validar un usuario en DB
-    public UsuarioDTO validarUsuario(UsuarioDTO p_Obj) throws Exception{
+    @Override
+    public UsuarioDTO ValidarUsuario(UsuarioDTO p_Obj) throws Exception{
         String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Obj)]";
+        
         final Connection conn = ConexionPostgresql.getInstanceBD().IniciarConexion();
         UsuarioDTO objResult = null;
-       
         
         try{
             //logger.log(Level.INFO, CPREFIX + MPREFIX + "-> Inicio ejecución");
@@ -76,7 +78,7 @@ public class QueryUsuarioJdbc implements IUsuarioRMI{
           //  logger.log(Level.INFO, CPREFIX + MPREFIX + "-> Ejecución finalizada correctamente");
         }
         catch(SQLException ex){
-            objResult=failUser();
+            objResult = failUser();
            // logger.log(Level.SEVERE, CPREFIX + MPREFIX + "-> Error al intentar Validar el Usuario. Detalle: " + ex.getMessage());
             throw ex;
         }
@@ -86,23 +88,19 @@ public class QueryUsuarioJdbc implements IUsuarioRMI{
             }
         }
         
-        
         return objResult;
     }
     // </editor-fold>
  
     //</editor-fold>
 
-  private UsuarioDTO failUser()
-  { UsuarioDTO salida=new UsuarioDTO();
-      salida.SetNombreCompleto("Error");
-      salida.SetNombreCompleto("error");
-      salida.SetId(0);
-      return salida;
-  }    
-
-    @Override
-    public UsuarioDTO validarUsuarioDTO(UsuarioDTO user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    // <editor-fold defaultstate="collapsed" desc="metodos privados">
+    private UsuarioDTO failUser(){ 
+        UsuarioDTO salida=new UsuarioDTO();
+        salida.SetNombreCompleto("Error");
+        salida.SetNombreCompleto("error");
+        salida.SetId(0);
+        return salida;
     }
+    // </editor-fold>
 }

@@ -1,6 +1,5 @@
 package rmi;
 
-import rmi_interface.Interface;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -8,7 +7,6 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static rmi.Implementacion.logger;
 import rmi_interface.IFinanzaRMI;
 import rmi_interface.ILoginRMI;
 import rmi_interface.IRecursoHumanoRMI;
@@ -20,68 +18,28 @@ import rmi_interface.IRecursoHumanoRMI;
  */
 
 public class ServidorRMI {
-
+    // <editor-fold defaultstate="collapsed" desc="propiedades privadas">
     private Registry registro;
     private boolean conectado;
     private static String CPREFIX = "Lab01_RMI_Servidor.rmi.ServidorRMI";
+    private static Logger logger;
+    // </editor-fold>
 
-    static Logger logger;
-
+    // <editor-fold defaultstate="collapsed" desc="constructores">
     public ServidorRMI() {
-        
         String MPREFIX = " [ServidorRMI()]";
         this.conectado = false;
         this.registro = null;
         logger = Logger.getLogger(getClass().getName());
         logger.log(Level.INFO, "Se ha instanciado la clase Servidor RMI");
         logger.log(Level.INFO, String.format("%s %s %s", CPREFIX, MPREFIX, " -> Se ha instanciado la Clase"));
-
     }
+    // </editor-fold>
    
-    private void iniciarRegistro(int Puerto) throws RemoteException {
-        String MPREFIX = " [IniciarRegistro(int puerto)]";
-        
-        try{
-            registro = LocateRegistry.getRegistry(Puerto);
-            registro.list();
-            
-            conectado = true;
-            
-            logger.log(Level.INFO, String.format("%s %s %s", CPREFIX,  MPREFIX, "-> Se ha iniciado el registro correctamente"));
-        }
-        catch(RemoteException ex){
-            // Volvemos a realizar el proceso del try, ya que al iniciar por primera vez el registro
-            // este se cae, pero al volverlo a iniciar funciona sin problemas
-            
-            registro = LocateRegistry.createRegistry(Puerto); //Se creará el objeto a nivel de localhost
-            registro.list();  //Por lo que posteriormente, entrega una registro con la lista de objetos remotos
-
-            conectado = true;
-            //conectado = false;
-            //throw  ex;
-        }
-    }
-
-    //Ingresa el objeto referenciado al registro del servidor, de tal manera
-    //que pueda ser utilizado posteriormente de forma remota
-    public boolean iniciarConexion(Interface objeto, String nombre, int Puerto) {
-
-        try {
-            this.registro = getRegistro(Puerto);
-
-            //Para poder realizar el objeto remoto, deberá estar en el Registry
-            //del servidor, por lo que con el método rebind quedará registrado
-            //con el nombre de referencia del objeto y el objeto inicializado
-            //que entró por parámetro
-            registro.rebind(nombre, objeto);
-        } catch (RemoteException re) {
-            //En caso de haber un error, es mostrado por un mensaje
-            logger.log(Level.SEVERE, re.getMessage());
-            return false;
-        }
-        return true;
-    }
-
+    // <editor-fold defaultstate="collapsed" desc="metodos publicos">
+    
+    // <editor-fold defaultstate="collapsed" desc="detenerConexion">
+    
     //Quita del registro del servidor la referencia al objeto remoto
     public void detenerConexion(String nombreUsado) throws RemoteException {
      String MPREFIX = " [DetenerConexion(String nombreUsado)]";
@@ -99,14 +57,9 @@ public class ServidorRMI {
             conectado = true;
         }
     }
+    // </editor-fold>
 
-    public Registry getRegistro(int Puerto) throws RemoteException {
-        if (this.registro == null) {
-            iniciarRegistro(Puerto);
-        }
-        return registro;
-    }
-
+    // <editor-fold defaultstate="collapsed" desc="metodos accesores y mutadores">
     public void setRegistro(Registry registro) {
         this.registro = registro;
     }
@@ -126,7 +79,9 @@ public class ServidorRMI {
         
         return this.registro;
     }
+    // </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="IniciarConexion">
     public boolean IniciarConexion(Object object, String nombre, int puerto){
         String MPREFIX = " [IniciarConexion(Object object, String nombre, int puerto)]";
         
@@ -165,7 +120,9 @@ public class ServidorRMI {
         
         return objResult;
     }
+    // </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="IniciarRegistro">
     private void IniciarRegistro(int puerto) throws RemoteException{
         String MPREFIX = " [IniciarRegistro(int puerto)]";
         
@@ -188,5 +145,7 @@ public class ServidorRMI {
             //throw  ex;
         }
     } 
-        
+    // </editor-fold>
+    
+    // </editor-fold>
 }
