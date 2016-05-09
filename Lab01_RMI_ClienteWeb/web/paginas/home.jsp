@@ -9,9 +9,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Bienvenido(a)</title>
+        <title>Lab01 - Home</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>P&aacute;gina de Inicio</h1>
+        <br/>
+        <span>Bienvenido(a): ${requestScope['user'].GetUserName()}</span>
     </body>
 </html>

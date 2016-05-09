@@ -1,12 +1,10 @@
 package rmi;
 
-import rmi_interface.Interface;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import rmi_interface.IFinanzaRMI;
 import rmi_interface.IRecursoHumanoRMI;
-import rmi_interface.IUsuarioRMI;
 import rmi_interface.ILoginRMI;
 /**
  *
@@ -20,11 +18,9 @@ public class ConexionCliente {
     
     private Registry registry;  //Registro de la conexión del usuario con el servidor
     private boolean conectado;  //Estado de conexión del usuario con el servidor
-    private Interface servidor; //Interface necesaria para la comunición con el objecto del servidor
     private IFinanzaRMI servidorFinanza; //Interface necesaria para la comunición con el objecto del servidor
     private IRecursoHumanoRMI servidorRRHH; //Interface necesaria para la comunición con el objecto del servidor
-    private IUsuarioRMI servidorLogin; //Interface necesaria para la comunición con el objecto del servidor
-    public static String nombreReferenciaRemota = "Ejemplo-Síncrono-RMI"; // Nombre del objeto subido
+    private ILoginRMI servidorLogin; //Interface necesaria para la comunición con el objecto del servidor
     public static String loginRefRemoto = "LoginRefRemoto";
     public static String rrhhRefRemoto = "RrhhRefRemoto";
     public static String finanzasRefRemoto =  "FinanzasRefRemoto";
@@ -36,7 +32,9 @@ public class ConexionCliente {
     public ConexionCliente() {
         this.conectado = false;
         this.registry = null;
-        this.servidor = null;
+        this.servidorFinanza = null;
+        this.servidorLogin = null;
+        this.servidorRRHH = null;
     }
 
     // </editor-fold>
@@ -45,7 +43,6 @@ public class ConexionCliente {
     
     public boolean iniciarRegistro(String IP, int Puerto) throws RemoteException {
         try {
-            
             //Se le otorga el permiso necesario para poder ejecutar las funciones correspondientes
             java.security.AllPermission allPermision = new java.security.AllPermission();          
             System.setProperty("java.security.policy", "rmi.policy");
@@ -61,10 +58,10 @@ public class ConexionCliente {
                 System.out.println(e.getMessage());
                 System.out.println(e.toString());
             }
+            
             //Vamos al Registry y miramos el Objeto "nombreObjRemoto" para poder usarlo.
-            servidor = (Interface) registry.lookup(nombreReferenciaRemota);
             servidorFinanza = (IFinanzaRMI) registry.lookup(finanzasRefRemoto);
-            servidorLogin = (IUsuarioRMI) registry.lookup(loginRefRemoto);
+            servidorLogin = (ILoginRMI) registry.lookup(loginRefRemoto);
             servidorRRHH = (IRecursoHumanoRMI) registry.lookup(rrhhRefRemoto);
 
             this.conectado = true;
@@ -78,7 +75,6 @@ public class ConexionCliente {
             this.conectado = false;
             return false;
         }
-
     }
     
     // </editor-fold>
@@ -100,14 +96,6 @@ public class ConexionCliente {
 
     public void setConectado(boolean conectado) {
         this.conectado = conectado;
-    }
-
-    public Interface getServidor() {
-        return servidor;
-    }
-
-    public void setServidor(Interface servidor) {
-        this.servidor = servidor;
     }
 
     /**
@@ -141,14 +129,14 @@ public class ConexionCliente {
     /**
      * @return the servidorLogin
      */
-    public IUsuarioRMI getServidorLogin() {
+    public ILoginRMI getServidorLogin() {
         return servidorLogin;
     }
 
     /**
      * @param servidorLogin the servidorLogin to set
      */
-    public void setServidorLogin(IUsuarioRMI servidorLogin) {
+    public void setServidorLogin(ILoginRMI servidorLogin) {
         this.servidorLogin = servidorLogin;
     }
     

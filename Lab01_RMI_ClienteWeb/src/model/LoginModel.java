@@ -7,9 +7,9 @@ package model;
 
 import conf.Parameters;
 import dto.UsuarioDTO;
+import java.rmi.RemoteException;
 import rmi.ConexionCliente;
 import rmi_interface.ILoginRMI;
-import rmi_interface.IUsuarioRMI;
 
 /**
  *
@@ -19,7 +19,7 @@ public class LoginModel {
     // <editor-fold defaultstate="collapsed" desc="propiedades privadas">
     private ConexionCliente conexionRMI;
     private static LoginModel instance = null;
-    private IUsuarioRMI usuarioRMI;
+    private ILoginRMI loginRMI;
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="constructores">
@@ -41,22 +41,27 @@ public class LoginModel {
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="metodos publicos">
-    public UsuarioDTO ValidarUsuario(UsuarioDTO p_Obj) throws Exception{
+    public UsuarioDTO ValidarUsuario(UsuarioDTO p_Obj) throws Exception, RemoteException{
         UsuarioDTO objResult = null;
         
         try{
             // Iniciamos el registro del RMI
-            //if(this.conexionRMI.iniciarRegistro(Parameters.PARAM_IP_SERVER_RMI, Parameters.PARAM_PORT_SERVER_RMI)){
-            //    this.usuarioRMI = this.conexionRMI.getServidorLogin();
-            //}
+            if(this.conexionRMI.iniciarRegistro(Parameters.PARAM_IP_SERVER_RMI, Parameters.PARAM_PORT_SERVER_RMI)){
+                this.loginRMI = this.conexionRMI.getServidorLogin();
+            }
             
-            objResult = new UsuarioDTO();
+//            objResult = new UsuarioDTO();
+//            
+//            objResult.SetUserName(p_Obj.GetUserName());
+//            objResult.SetPassword(p_Obj.GetPassword());
+//            objResult.SetNombreCompleto("Usuario Prueba");
+//            objResult.SetRol("Recursos Humanos");
+//            objResult.SetId(1);
             
-            objResult.SetUserName(p_Obj.GetUserName());
-            objResult.SetPassword(p_Obj.GetPassword());
-            objResult.SetNombreCompleto("Usuario Prueba");
-            objResult.SetRol("Recursos Humanos");
-            objResult.SetId(1);
+            objResult = this.loginRMI.ValidarUsuario(p_Obj);
+        }
+        catch(RemoteException ex){
+            throw ex;
         }
         catch(Exception ex){
             throw ex;
