@@ -34,7 +34,7 @@ public class ServidorRMI {
         this.registro = null;
         logger = Logger.getLogger(getClass().getName());
         logger.log(Level.INFO, "Se ha instanciado la clase Servidor RMI");
-        logger.log(Level.INFO, String.format("{0} {1} {2}", CPREFIX, MPREFIX, " -> Se ha instanciado la Clase"));
+        logger.log(Level.INFO, String.format("%s %s %s", CPREFIX, MPREFIX, " -> Se ha instanciado la Clase"));
 
     }
    
@@ -47,11 +47,18 @@ public class ServidorRMI {
             
             conectado = true;
             
-            logger.log(Level.INFO, String.format("{0} {1} {2}", CPREFIX,  MPREFIX, "-> Se ha iniciado el registro correctamente"));
+            logger.log(Level.INFO, String.format("%s %s %s", CPREFIX,  MPREFIX, "-> Se ha iniciado el registro correctamente"));
         }
         catch(RemoteException ex){
-            conectado = false;
-            throw  ex;
+            // Volvemos a realizar el proceso del try, ya que al iniciar por primera vez el registro
+            // este se cae, pero al volverlo a iniciar funciona sin problemas
+            
+            registro = LocateRegistry.createRegistry(Puerto); //Se creará el objeto a nivel de localhost
+            registro.list();  //Por lo que posteriormente, entrega una registro con la lista de objetos remotos
+
+            conectado = true;
+            //conectado = false;
+            //throw  ex;
         }
     }
 
@@ -87,7 +94,7 @@ public class ServidorRMI {
         } 
         catch (NotBoundException | AccessException ex) {
             //En caso de haber un error, es mostrado por un mensaje
-            logger.log(Level.SEVERE, String.format("{0} {1} {2}", CPREFIX, MPREFIX, 
+            logger.log(Level.SEVERE, String.format("%s %s %s", CPREFIX, MPREFIX, 
                     "-> Error al intentar detener la conexión!"), ex);
             conectado = true;
         }
@@ -112,7 +119,7 @@ public class ServidorRMI {
         this.conectado = conectado;
     }
 
-        public Registry GetRegistro(int puerto) throws RemoteException{
+    public Registry GetRegistro(int puerto) throws RemoteException{
         if(this.registro == null){
             this.IniciarRegistro(puerto);
         }
@@ -120,7 +127,7 @@ public class ServidorRMI {
         return this.registro;
     }
     
-        public boolean IniciarConexion(Object object, String nombre, int puerto){
+    public boolean IniciarConexion(Object object, String nombre, int puerto){
         String MPREFIX = " [IniciarConexion(Object object, String nombre, int puerto)]";
         
         boolean objResult = false;
@@ -131,19 +138,19 @@ public class ServidorRMI {
             
             if(object.getClass().equals(ImplementacionFinanzas.class)){
                 // Guardamos un registro en el log
-                 //logger.log(Level.INFO, String.format("{0} {1} {2}", CPREFIX, MPREFIX, "-> Se agregará " + nombre + " con el objecto Usuario"));
-                //De tal manera que aquí se castee la interface que le corresponde
+                logger.log(Level.INFO, String.format("%s %s %s", CPREFIX, MPREFIX, "-> Se agregará " + nombre + " con el objecto Usuario"));
+                //De tal manera que aquí se castee la interface0 que le corresponde
                 registro.rebind(nombre, (IFinanzaRMI)object);
             }
             else if (object.getClass().equals(ImplementacionRRHH.class)){
                 // Guardamos un registro en el log
-                 //logger.log(Level.INFO, String.format("{0} {1} {2}", CPREFIX, MPREFIX, "-> Se agregará " + nombre + " con el objecto Usuario"));
+                logger.log(Level.INFO, String.format("%s %s %s", CPREFIX, MPREFIX, "-> Se agregará " + nombre + " con el objecto Usuario"));
                 //De tal manera que aquí se castee la interface que le corresponde
                 registro.rebind(nombre, (IRecursoHumanoRMI)object);
             }
             else if (object.getClass().equals(ImplementacionLogin.class)){
                 // Guardamos un registro en el log
-                // logger.log(Level.INFO, String.format("{0} {1} {2}", CPREFIX, MPREFIX, "-> Se agregará " + nombre + " con el objecto Usuario"));
+                logger.log(Level.INFO, String.format("%s %s %s", CPREFIX, MPREFIX, "-> Se agregará " + nombre + " con el objecto Usuario"));
                 //De tal manera que aquí se castee la interface que le corresponde
                 registro.rebind(nombre, (ILoginRMI)object);
             }
@@ -152,14 +159,14 @@ public class ServidorRMI {
             objResult = true;
         }
         catch(RemoteException ex){
-            logger.log(Level.SEVERE, String.format("{0} {1} {2}", CPREFIX, MPREFIX, 
+            logger.log(Level.SEVERE, String.format("%s %s %s", CPREFIX, MPREFIX, 
                     "-> Error al intentar iniciar la conexión. Detalle: " + ex.getMessage()), ex);
         }
         
         return objResult;
     }
     
-          private void IniciarRegistro(int puerto) throws RemoteException{
+    private void IniciarRegistro(int puerto) throws RemoteException{
         String MPREFIX = " [IniciarRegistro(int puerto)]";
         
         try{
@@ -168,11 +175,17 @@ public class ServidorRMI {
             
             conectado = true;
             
-            logger.log(Level.INFO, String.format("{0} {1} {2}", CPREFIX,  MPREFIX, "-> Se ha iniciado el registro correctamente"));
+            logger.log(Level.INFO, String.format("%s %s %s", CPREFIX,  MPREFIX, "-> Se ha iniciado el registro correctamente"));
         }
         catch(RemoteException ex){
-            conectado = false;
-            throw  ex;
+            // Volvemos a realizar el proceso del try, ya que al iniciar por primera vez el registro
+            // este se cae, pero al volverlo a iniciar funciona sin problemas
+            registro = LocateRegistry.createRegistry(puerto); //Se creará el objeto a nivel de localhost
+            registro.list();  //Por lo que posteriormente, entrega una registro con la lista de objetos remotos
+            conectado = true;
+            
+            //conectado = false;
+            //throw  ex;
         }
     } 
         

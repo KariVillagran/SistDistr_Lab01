@@ -30,11 +30,11 @@ public class Test {
            ImplementacionLogin implementacionLogin=new ImplementacionLogin();
          UsuarioDTO u=new UsuarioDTO();
          u.SetId(1);
-        u.SetUserName("lguerra");
-        u.SetPassword("123456");
+        u.SetUserName("23432");
+        u.SetPassword("432432");
         UsuarioDTO salida = implementacionLogin.ValidarUsuario(u);
         System.out.println("usuario nombre="+salida.GetNombreCompleto());
-       
+       /*
         RecursoHumanoDTO recursoHumanoDTO= new RecursoHumanoDTO();
         recursoHumanoDTO.SetId(6);
         recursoHumanoDTO.SetComuna("x");
@@ -64,7 +64,7 @@ public class Test {
         //ArrayList<RecursoHumanoDTO> lista = qrrhh.buscarUsuario(recursoHumanoDTO);
         //System.out.println("salida="+lista.get(0).GetNombrePersona());
         //System.out.println("salida="+lista.get(0).GetDireccion());
-        
+        */
          
     }
     

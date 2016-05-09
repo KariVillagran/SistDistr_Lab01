@@ -20,7 +20,7 @@ import rmi.ServidorRMI;
 public class Servidor {
 
     public static ServidorRMI servidor;
-    public static int puerto = 2014;
+    public static int puerto = dataaccess.Parameters.PARAM_SERVER_RMI_PORT;
     public static Implementacion objetoLocal;
     public static ImplementacionLogin loginLocal;
     public static ImplementacionRRHH rrhhLocal;
@@ -33,10 +33,13 @@ public class Servidor {
 
     public static void main(String[] args) {
         logger = Logger.getLogger("Servidor");
+        
+        //System.setProperty( "java.rmi.server.hostname", "127.0.0.1");
+        
 
         //Se inicializa el objeto, el cual podrá ser llamado remotamente
         try {
-            objetoLocal = new Implementacion();
+            //objetoLocal = new Implementacion();
             loginLocal = new ImplementacionLogin();
             rrhhLocal = new ImplementacionRRHH();
             finanzasLocal = new ImplementacionFinanzas();
@@ -50,13 +53,13 @@ public class Servidor {
 
         servidor = new ServidorRMI();
 
-        boolean resultadoConexion = servidor.iniciarConexion(objetoLocal, nombreReferenciaRemota, puerto);
+        //boolean resultadoConexion = servidor.iniciarConexion(objetoLocal, nombreReferenciaRemota, puerto);
         boolean resultadoConexion2 = servidor.IniciarConexion(loginLocal, loginRefRemoto, puerto);
         boolean resultadoConexion3= servidor.IniciarConexion(rrhhLocal, rrhhRefRemoto, puerto);
         boolean resultadoConexion4= servidor.IniciarConexion(finanzasLocal, finanzasRefRemoto, puerto);
         
         
-        if (resultadoConexion && resultadoConexion2 && resultadoConexion3 && resultadoConexion4 ) {
+        if (resultadoConexion2 && resultadoConexion3 && resultadoConexion4 ) {
             logger.log(Level.INFO, "Se ha establecido la conexión correctamente");
         } else {
             logger.log(Level.INFO, "Ha ocurrido un error al conectarse");
@@ -69,7 +72,7 @@ public class Servidor {
         //En caso que presione una tecla el administrador, se detiene el servicio
         try {
   
-            servidor.detenerConexion(nombreReferenciaRemota);
+            //servidor.detenerConexion(nombreReferenciaRemota);
             servidor.detenerConexion(loginRefRemoto);
             servidor.detenerConexion(rrhhRefRemoto);
             servidor.detenerConexion(finanzasRefRemoto);
