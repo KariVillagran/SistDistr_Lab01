@@ -37,25 +37,33 @@ public class ImplementacionFinanzas extends UnicastRemoteObject implements IFina
     // <editor-fold defaultstate="collapsed" desc="metodos publicos">
     // ***
     // metodos publicos
+    
+    // <editor-fold defaultstate="collapsed" desc="GetFinanzaById">
     @Override
-    public FinanzaDTO GetFinanzaById(int p_Id) throws RemoteException {
+    public FinanzaDTO GetFinanzaById(int p_Id) throws Exception {
         FinanzaDTO resp = qfj.GetFinanzaById(p_Id);
         return resp;
     }
-
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="GetListaFinanzasAll">
     @Override
     public List<FinanzaDTO> GetListaFinanzasAll() throws Exception {
         List<FinanzaDTO> resp = qfj.GetListaFinanzasAll();
         return resp;
     }
-
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="InsertarFinanza">
     @Override
     public boolean InsertarFinanza(FinanzaDTO p_Obj) throws Exception {
         boolean resp = qfj.InsertarFinanza(p_Obj);
        return resp;
 
     }
-
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="UpdateFinanza">
     @Override
     public boolean UpdateFinanza(FinanzaDTO p_Obj) throws Exception {
         boolean resp = qfj.UpdateFinanza(p_Obj);
@@ -64,11 +72,14 @@ public class ImplementacionFinanzas extends UnicastRemoteObject implements IFina
     
     }
     // </editor-fold>
-
+    
+    // <editor-fold defaultstate="collapsed" desc="DeleteFinanza">
     @Override
     public boolean deleteFinanza(FinanzaDTO p_Obj) throws Exception {
- boolean resp = qfj.deleteFinanza(p_Obj);
+        boolean resp = qfj.deleteFinanza(p_Obj);
         return resp;
- 
     }
+    // </editor-fold>
+    
+    // </editor-fold>
 }

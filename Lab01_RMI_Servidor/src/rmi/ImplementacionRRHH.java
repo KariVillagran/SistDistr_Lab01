@@ -37,26 +37,34 @@ public class ImplementacionRRHH extends UnicastRemoteObject implements IRecursoH
     // <editor-fold defaultstate="collapsed" desc="metodos publicos">
     // ***
     // metodos publicos
+    
+    // <editor-fold defaultstate="collapsed" desc="GetRecursoHumanoById">
     @Override
     public RecursoHumanoDTO GetRecursoHumanoById(int p_Id) throws Exception {
         RecursoHumanoDTO resp = q.GetRecursoHumanoById(p_Id);
         return resp;
     }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="GetListRecursoHumanoAll">
     @Override
     public List<RecursoHumanoDTO> GetListRecursoHumanoAll() throws Exception {
         List<RecursoHumanoDTO> resp = q.GetListRecursoHumanoAll();
     
-      return resp;
+        return resp;
     }
-
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="InsertRecursoHumano">
     @Override
     public boolean InsertRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception {
         boolean resp = q.InsertRecursoHumano(p_Obj);
       
-        return resp;
-      
+        return resp;  
     }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="UpdateRecursoHumano">
     @Override
     public boolean UpdateRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception {
         boolean resp = q.UpdateRecursoHumano(p_Obj);
@@ -64,12 +72,15 @@ public class ImplementacionRRHH extends UnicastRemoteObject implements IRecursoH
 
     }
     // </editor-fold>
-
+    
+    // <editor-fold defaultstate="collapsed" desc="DeleteRecursoHumano">
     @Override
     public boolean deleteRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception {
-    boolean resp = q.deleteRecursoHumano(p_Obj);
+        boolean resp = q.deleteRecursoHumano(p_Obj);
   
         return resp;
-    
     }
+    // </editor-fold>
+    
+    // </editor-fold>
 }
