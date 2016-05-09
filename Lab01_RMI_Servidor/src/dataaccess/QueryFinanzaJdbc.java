@@ -39,16 +39,25 @@ public class QueryFinanzaJdbc implements IFinanzaRMI{
     }
     // </editor-fold>
     
-
+    // <editor-fold defaultstate="collapsed" desc="metodos privados">
+    private FinanzaDTO failUser(){ 
+        FinanzaDTO salida=new FinanzaDTO();
+        salida.SetId(0);
+        return salida;
+    }     
+    // </editor-fold>
   
-   
-    
-        public Integer borrarRRHH(FinanzaDTO p_Obj) throws Exception{
+    // <editor-fold defaultstate="collapsed" desc="metodos publicos">
+     
+    // <editor-fold defaultstate="collapsed" desc="BorrarRRHH">
+    public Integer borrarRRHH(FinanzaDTO p_Obj) throws Exception{
         String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Obj)]";
+        
         FinanzaDTO objResult = null;
-        final Connection  conn = ConexionPostgresql.IniciarConexion();        
+        final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();        
         ArrayList<FinanzaDTO> listaRecurso=new ArrayList<>();
         Integer salidaBorrar=0;
+        
         try{
             logger.log(Level.INFO, CPREFIX + MPREFIX + "-> Inicio ejecución");
             Statement stmt = conn.createStatement();
@@ -69,31 +78,19 @@ public class QueryFinanzaJdbc implements IFinanzaRMI{
             }
         }
         
-        
         return salidaBorrar;
     }
-    // </editor-fold>
-               
+    // </editor-fold>                 
       
-        
-        
-  
-          
-        
-  private FinanzaDTO failUser()
-  { FinanzaDTO salida=new FinanzaDTO();
-      salida.SetId(0);
-      return salida;
-  }     
-
+    // <editor-fold defaultstate="collapsed" desc="GetFinanzaById">
     @Override
-    public FinanzaDTO GetFinanzaById(int p_Id) 
-    {
-        try{
-            String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Obj)]";
+    public FinanzaDTO GetFinanzaById(int p_Id) throws Exception {
+        String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Obj)]";
+        
+        try{    
             ArrayList<FinanzaDTO> lista=new ArrayList<>();
             FinanzaDTO objResult = null;
-            final Connection  conn = ConexionPostgresql.IniciarConexion();
+            final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();
             
             try{
                 logger.log(Level.INFO, CPREFIX + MPREFIX + "-> Inicio ejecución");
@@ -140,17 +137,21 @@ public class QueryFinanzaJdbc implements IFinanzaRMI{
         } catch (SQLException ex) {
            // Logger.getLogger(QueryFinanzaJdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return null;
     }
+    // </editor-fold>
 
-    @Override
+    // <editor-fold defaultstate="collapsed" desc="GetListaFinanzasAll">
+    @Override 
     public List<FinanzaDTO> GetListaFinanzasAll() throws Exception {
-      String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Obj)]";
+        String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Obj)]";
+        
         ArrayList<FinanzaDTO> lista=new ArrayList<>();
         FinanzaDTO objResult = null;
-        final Connection  conn = ConexionPostgresql.IniciarConexion();        
+        final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();        
+        
         try{
-            
             Statement stmt = conn.createStatement();
             String sql="SELECT id, nombrepersona, fchmovimiento, saldomovimiento FROM finanza;";
             ResultSet rs = stmt.executeQuery(sql);
@@ -181,13 +182,17 @@ public class QueryFinanzaJdbc implements IFinanzaRMI{
         
         return lista;
     }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="InsertarFinanza">
     @Override
     public boolean InsertarFinanza(FinanzaDTO p_Obj) throws Exception {
-      String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Obj)]";
+        String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Obj)]";
+        
         Integer salida=0;
         FinanzaDTO objResult = null;
-        final Connection  conn = ConexionPostgresql.IniciarConexion();        
+        final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();        
+        
         try{
             logger.log(Level.INFO, CPREFIX + MPREFIX + "-> Inicio ejecución");
         
@@ -221,42 +226,42 @@ public class QueryFinanzaJdbc implements IFinanzaRMI{
         {return true;}
         else{return false;}
     }
-
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="UpdateFinanza">
     @Override
     public boolean UpdateFinanza(FinanzaDTO p_Obj) throws Exception {
-     
-     Integer salida=0;
-     final Connection  conn = ConexionPostgresql.IniciarConexion();        
-     Statement stmt = conn.createStatement();    
-     String sql="UPDATE finanza SET  nombrepersona='"+p_Obj.GetNombrePersonal()+"',"
+        Integer salida=0;
+        final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();        
+        Statement stmt = conn.createStatement();    
+        String sql="UPDATE finanza SET  nombrepersona='"+p_Obj.GetNombrePersonal()+"',"
             + " fchmovimiento='"+p_Obj.GetFchMovimiento()+"',"
             + " saldomovimiento='"+p_Obj.GetSaldoMovimiento()+"'"
             + " WHERE id="+p_Obj.GetId()+";";
-                 System.out.println("dataaccess.LoginDA.ValidarUsuario sql="+sql);
+        
+        System.out.println("dataaccess.LoginDA.ValidarUsuario sql="+sql);
 
-    
-    int rs = stmt.executeUpdate(sql);
+        int rs = stmt.executeUpdate(sql);
             salida=rs;
             stmt.close();
             if(salida>0)
             {return true;}
             else
             {return false;}    
-                 
     }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="DeleteFinanza">
     @Override
-    public boolean deleteFinanza(FinanzaDTO p_Obj) throws Exception {
-    
-         
-     Integer salida=0;
-     final Connection  conn = ConexionPostgresql.IniciarConexion();        
-     Statement stmt = conn.createStatement();    
-     String sql="delete from  finanza where id="+p_Obj.GetId()+";";
-                 System.out.println("dataaccess.LoginDA.ValidarUsuario sql="+sql);
+    public boolean deleteFinanza(FinanzaDTO p_Obj) throws Exception {   
+        Integer salida=0;
+        final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();        
+        Statement stmt = conn.createStatement();    
+        String sql="delete from  finanza where id="+p_Obj.GetId()+";";
+        System.out.println("dataaccess.LoginDA.ValidarUsuario sql="+sql);
 
     
-    int rs = stmt.executeUpdate(sql);
+        int rs = stmt.executeUpdate(sql);
             salida=rs;
             stmt.close();
             if(salida>0)
@@ -264,4 +269,7 @@ public class QueryFinanzaJdbc implements IFinanzaRMI{
             else
             {return false;}   
     }
+    // </editor-fold>
+    
+    // </editor-fold>
 }

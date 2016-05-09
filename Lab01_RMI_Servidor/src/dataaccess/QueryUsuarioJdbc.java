@@ -32,10 +32,13 @@ public class QueryUsuarioJdbc implements IUsuarioRMI{
     private static Logger logger;
     // </editor-fold>
     
-
+    // <editor-fold defaultstate="collapsed" desc="metodos publicos">
+    
+    // <editor-fold defaultstate="collapsed" desc="validar usuario">
+    // metodo para validar un usuario en DB
     public UsuarioDTO validarUsuario(UsuarioDTO p_Obj) throws Exception{
         String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Obj)]";
-         final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();
+        final Connection conn = ConexionPostgresql.getInstanceBD().IniciarConexion();
         UsuarioDTO objResult = null;
        
         
@@ -88,6 +91,7 @@ public class QueryUsuarioJdbc implements IUsuarioRMI{
     }
     // </editor-fold>
  
+    //</editor-fold>
 
   private UsuarioDTO failUser()
   { UsuarioDTO salida=new UsuarioDTO();

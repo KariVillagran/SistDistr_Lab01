@@ -39,23 +39,25 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
     }
     // </editor-fold>
     
-
-          
- 
-           
+    // <editor-fold defaultstate="collapsed" desc="metodos privados">
     
-  private RecursoHumanoDTO failUser()
-  { RecursoHumanoDTO salida=new RecursoHumanoDTO();
-      salida.SetId(0);
-      return salida;
-  }     
+    private RecursoHumanoDTO failUser(){ 
+        RecursoHumanoDTO salida=new RecursoHumanoDTO();
+        salida.SetId(0);
+        return salida;
+    }  
+  
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="metodos publicos">
+    
+    // <editor-fold defaultstate="collapsed" desc="GetRecursoHumanoById">
     @Override
     public RecursoHumanoDTO GetRecursoHumanoById(int p_Id) throws Exception {
        
           String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Obj)]";
         RecursoHumanoDTO objResult = null;
-         final Connection  conn = ConexionPostgresql.IniciarConexion();
+         final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();
         ArrayList<RecursoHumanoDTO> lista=new ArrayList<>();
         try{
             logger.log(Level.INFO, CPREFIX + MPREFIX + "-> Inicio ejecución");
@@ -113,12 +115,14 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
         return objResult;
         
     }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="GetListRecursoHumanoAll">
     @Override
     public List<RecursoHumanoDTO> GetListRecursoHumanoAll() throws Exception {
     String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Obj)]";
         RecursoHumanoDTO objResult = null;
-         final Connection  conn = ConexionPostgresql.IniciarConexion();
+         final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();
         ArrayList<RecursoHumanoDTO> lista=new ArrayList<>();
         try{
             logger.log(Level.INFO, CPREFIX + MPREFIX + "-> Inicio ejecución");
@@ -174,14 +178,16 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
         }
         return lista;
     }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="InsertRecursoHumano">
     @Override
     public boolean InsertRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception {
  
       String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Obj)]";
         Integer salida=0;
         RecursoHumanoDTO objResult = null;
-         final Connection  conn = ConexionPostgresql.IniciarConexion();
+         final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();
         try{
             logger.log(Level.INFO, CPREFIX + MPREFIX + "-> Inicio ejecución");
         
@@ -220,12 +226,14 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
        else
        {return false;}    
     }
-
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="UdpdateRecursoHumano">
     @Override
     public boolean UpdateRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception {
         
      Integer salida=0;
-     final Connection  conn = ConexionPostgresql.IniciarConexion();        
+     final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();        
      Statement stmt = conn.createStatement(); 
         
         String sql="UPDATE public.recursohumano " +
@@ -244,13 +252,15 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
             else
             {return false;}    
     }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="DeleteRecursoHumano">
     @Override
     public boolean deleteRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception {
 
              
      Integer salida=0;
-     final Connection  conn = ConexionPostgresql.IniciarConexion();        
+     final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();        
      Statement stmt = conn.createStatement(); 
         
         String sql="delete from recursohumano where  id="+p_Obj.GetId()+";";
@@ -265,4 +275,7 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
             else
             {return false;}    
     }
+    // </editor-fold>
+    
+    // </editor-fold>
 }

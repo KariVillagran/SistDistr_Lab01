@@ -5,7 +5,7 @@
  */
 package rmi;
 
-import dataaccess.LoginDA;
+//import dataaccess.LoginDA;
 import dataaccess.QueryUsuarioJdbc;
 import dto.UsuarioDTO;
 import java.rmi.RemoteException;
@@ -24,7 +24,7 @@ public class ImplementacionLogin extends UnicastRemoteObject implements ILoginRM
     // propiedades privadas
     private static String CPREFIX = "Lab01_RMI_Servidor.rmi.ImplementacionLogin";
     private static Logger logger;
-    private LoginDA loginDA;
+    //private LoginDA loginDA;
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="constructores">
@@ -43,9 +43,9 @@ public class ImplementacionLogin extends UnicastRemoteObject implements ILoginRM
         String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Usuario)]";
     
         UsuarioDTO objResult = null;
-        QueryUsuarioJdbc queryUsuarioJdbc=new QueryUsuarioJdbc();
+        QueryUsuarioJdbc queryUsuarioJdbc = new QueryUsuarioJdbc();
         try{
-            loginDA = new LoginDA();
+            //loginDA = new LoginDA();
             objResult = queryUsuarioJdbc.validarUsuario(p_Usuario);
         }
         catch(Exception ex){
