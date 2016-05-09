@@ -35,7 +35,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="button" id="btnIngresar" value="Ingresar">
+                        <input type="submit" id="btnIngresar" value="Ingresar">
                     </td>
                 </tr>
             </table>
