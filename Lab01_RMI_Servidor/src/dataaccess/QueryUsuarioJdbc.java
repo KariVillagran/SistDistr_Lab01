@@ -19,7 +19,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import rmi_interface.IFinanzaRMI;
 import rmi_interface.ILoginRMI;
-import rmi_interface.IUsuarioRMI;
 
 /**
  *
