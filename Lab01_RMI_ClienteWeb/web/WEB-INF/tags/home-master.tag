@@ -354,8 +354,8 @@
                 
                 <ul class="nav nav-sidebar">
                     <li><a href="#">Finanzas</a></li>
-                    <li><a href="${pageContext.request.contextPath}/paginas/finanzas/list.jsp">Lista de Datos</a></li>
-                    <li><a href="#">Crear</a></li>
+                    <li><a href="${pageContext.request.contextPath}/FinanzaController?transaccion=buscarAll">Lista de Datos</a></li>
+                    <li><a href="${pageContext.request.contextPath}/FinanzaController?transaccion=mantenedor">Crear</a></li>
                  </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
