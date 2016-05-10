@@ -47,6 +47,46 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
         return salida;
     }  
   
+    private String getFiltroDatos(RecursoHumanoDTO p_Obj){
+       String _sqlQuery = "";
+       
+       if(p_Obj != null){
+            List<String> whereClausesList = new ArrayList<String>();
+
+            if(!p_Obj.GetNombrePersona().equals("")){
+                whereClausesList.add("nombrepersona like '%" + p_Obj.GetNombrePersona() + "%'");
+            }
+            if(!p_Obj.GetDepartamento().equals("")){
+                whereClausesList.add("departamento like '%" + p_Obj.GetDepartamento()+ "%'");
+            }
+            if(!p_Obj.GetDireccion().equals("")){
+                whereClausesList.add("direccion like '%" + p_Obj.GetDireccion()+ "%'");
+            }
+            if(!p_Obj.GetRegion().equals("")){
+                whereClausesList.add("region like '%" + p_Obj.GetRegion()+ "%'");
+            }
+            if(!p_Obj.GetComuna().equals("")){
+                whereClausesList.add("comuna like '%" + p_Obj.GetComuna() + "%'");
+            }
+            
+            if(whereClausesList.size() > 0){
+                _sqlQuery += "where ";
+                
+                for(int x = 0; x < whereClausesList.size(); x++){
+                    _sqlQuery += whereClausesList.get(x);
+                    
+                    if((x + 1) < whereClausesList.size()){
+                        _sqlQuery += " and ";
+                    }
+                }
+            }
+       }
+       
+       _sqlQuery += ";";
+       
+       return _sqlQuery;
+    }
+    
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="metodos publicos">
@@ -54,13 +94,13 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
     // <editor-fold defaultstate="collapsed" desc="GetRecursoHumanoById">
     @Override
     public RecursoHumanoDTO GetRecursoHumanoById(int p_Id) throws Exception {
-       
-          String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Obj)]";
+        String MPREFIX = " [GetRecursoHumanoById(int p_Id)]";
+
         RecursoHumanoDTO objResult = null;
-         final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();
+        final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();
         ArrayList<RecursoHumanoDTO> lista=new ArrayList<>();
         try{
-            logger.log(Level.INFO, CPREFIX + MPREFIX + "-> Inicio ejecución");
+            logger.log(Level.INFO, String.format("%s %s %s", CPREFIX, MPREFIX, "-> Inicio ejecución"));
         
             // Obtenemos el objeto "Connection" e iniciamos la conexión
             
@@ -102,10 +142,10 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
             rs.close();
             stmt.close();
          
-            logger.log(Level.INFO, CPREFIX + MPREFIX + "-> Ejecución finalizada correctamente");
+            logger.log(Level.INFO, String.format("%s %s %s", CPREFIX, MPREFIX, "-> Ejecución finalizada correctamente"));
         }
         catch(SQLException ex){
-            logger.log(Level.SEVERE, CPREFIX + MPREFIX + "-> Error al intentar Validar el Usuario. Detalle: " + ex.getMessage());
+            logger.log(Level.SEVERE, String.format("%s %s %s",CPREFIX, MPREFIX, "-> Error al intentar Validar el Usuario. Detalle: " + ex.getMessage()));
         }
         finally{
             if(conn != null){
@@ -113,19 +153,20 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
             }
         }
         return objResult;
-        
     }
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="GetListRecursoHumanoAll">
     @Override
     public List<RecursoHumanoDTO> GetListRecursoHumanoAll() throws Exception {
-    String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Obj)]";
+        String MPREFIX = " [List<RecursoHumanoDTO> GetListRecursoHumanoAll()]";
+        
         RecursoHumanoDTO objResult = null;
-         final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();
+        final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();
         ArrayList<RecursoHumanoDTO> lista=new ArrayList<>();
+        
         try{
-            logger.log(Level.INFO, CPREFIX + MPREFIX + "-> Inicio ejecución");
+            logger.log(Level.INFO, String.format("%s %s %s", CPREFIX, MPREFIX, "-> Inicio ejecución"));
         
             // Obtenemos el objeto "Connection" e iniciamos la conexión
             Statement stmt = conn.createStatement();
@@ -165,10 +206,10 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
             rs.close();
             stmt.close();
          
-            logger.log(Level.INFO, CPREFIX + MPREFIX + "-> Ejecución finalizada correctamente");
+            logger.log(Level.INFO, String.format("%s %s %s", CPREFIX, MPREFIX, "-> Ejecución finalizada correctamente"));
         }
         catch(SQLException ex){
-            logger.log(Level.SEVERE, CPREFIX + MPREFIX + "-> Error al intentar Validar el Usuario. Detalle: " + ex.getMessage());
+            logger.log(Level.SEVERE, String.format("%s %s %s", CPREFIX, MPREFIX, "-> Error al intentar Validar el Usuario. Detalle: " + ex.getMessage()));
             throw ex;
         }
         finally{
@@ -180,16 +221,80 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
     }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="GetListRecursoHumanoByFiltro">
+    @Override
+    public List<RecursoHumanoDTO> GetListRecursoHumanoByFiltro(RecursoHumanoDTO p_Obj) throws Exception{
+        String MPREFIX = " [GetListRecursoHumanoByFiltro(RecursoHumanoDTO p_Obj)]";
+        
+        RecursoHumanoDTO objResult = null;
+        final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();
+        ArrayList<RecursoHumanoDTO> lista=new ArrayList<>();
+        try{
+            logger.log(Level.INFO, String.format("%s %s %s", CPREFIX, MPREFIX, "-> Inicio ejecución"));
+        
+            // Obtenemos el objeto "Connection" e iniciamos la conexión
+            Statement stmt = conn.createStatement();
+            String sql="SELECT id,"
+                    + " nombrepersona, "
+                    + "fchnacimiento, "
+                    + "direccion, "
+                    + "comuna, "
+                    + "region,"
+                    + "email, "
+                    + "telefono, "
+                    + "sexo, "
+                    + "fchcontrato, "
+                    + "departamento FROM recursohumano " 
+                    + getFiltroDatos(p_Obj);
+            
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            System.out.println("dataaccess.LoginDA.ValidarUsuario sql="+sql);
+            
+            while (rs.next()) {
+               objResult = new RecursoHumanoDTO();
+               objResult.SetId(rs.getInt("id"));
+               objResult.SetNombrePersona(rs.getString("nombrepersona"));
+               objResult.SetFchNacimiento(rs.getDate("fchnacimiento"));
+               objResult.SetDireccion(rs.getString("direccion"));
+               objResult.SetComuna(rs.getString("comuna"));
+               objResult.SetRegion(rs.getString("region"));
+               objResult.SetEmail(rs.getString("email"));
+               objResult.SetTelefono(rs.getString("telefono"));
+               objResult.SetSexo(rs.getString("sexo"));
+               objResult.SetFchContrato(rs.getDate("fchcontrato"));
+               objResult.SetDepartamento(rs.getString("departamento"));
+               lista.add(objResult);
+            }
+            
+            rs.close();
+            stmt.close();
+         
+            logger.log(Level.INFO, String.format("%s %s %s", CPREFIX, MPREFIX, "-> Ejecución finalizada correctamente"));
+        }
+        catch(SQLException ex){
+            logger.log(Level.SEVERE, String.format("%s %s %s", CPREFIX, MPREFIX, "-> Error al intentar Validar el Usuario. Detalle: " + ex.getMessage()));
+            throw ex;
+        }
+        finally{
+            if(conn != null){
+                conn.close();
+            }
+        }
+        return lista;
+    }
+    // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="InsertRecursoHumano">
     @Override
     public boolean InsertRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception {
  
-      String MPREFIX = " [ValidarUsuario(UsuarioDTO p_Obj)]";
+      String MPREFIX = " [InsertRecursoHumano(RecursoHumanoDTO p_Obj)]";
         Integer salida=0;
         RecursoHumanoDTO objResult = null;
-         final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();
+        final Connection  conn = ConexionPostgresql.getInstanceBD().IniciarConexion();
         try{
-            logger.log(Level.INFO, CPREFIX + MPREFIX + "-> Inicio ejecución");
+            logger.log(Level.INFO, String.format("%s %s %s", CPREFIX, MPREFIX, "-> Inicio ejecución"));
         
             // Obtenemos el objeto "Connection" e iniciamos la conexión
             Statement stmt = conn.createStatement();
@@ -204,9 +309,7 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
             System.out.println("dataaccess.LoginDA.ValidarUsuario sql="+sql);
             stmt.close();
          
-            logger.log(Level.INFO, CPREFIX + MPREFIX + "-> Ejecución finalizada correctamente");
-      
-  
+            logger.log(Level.INFO, String.format("%s %s %s", CPREFIX, MPREFIX, "-> Ejecución finalizada correctamente"));
         } catch (Exception ex) {
             salida=0;
             Logger.getLogger(QueryRRHHJdbc.class.getName()).log(Level.SEVERE, null, ex);

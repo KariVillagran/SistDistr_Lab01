@@ -17,12 +17,14 @@ import java.util.List;
 public interface IRecursoHumanoRMI extends Remote{
     // metodo para obtener un objeto RecursoHumanoDTO por un determinado id desde la base de datos
     public RecursoHumanoDTO GetRecursoHumanoById(int p_Id) throws Exception;
-    // metodo para obtener una lista de RecursoHumanoDTO por un determinado filtro desde la base de datos
+    // metodo para obtener una lista de RecursoHumanoDTO desde la base de datos
     public List<RecursoHumanoDTO> GetListRecursoHumanoAll() throws Exception;
+    // metodo para obtener una lista de RecursoHumanoDTO por un determinado filtro desde la base de datos
+    public List<RecursoHumanoDTO> GetListRecursoHumanoByFiltro(RecursoHumanoDTO p_Obj) throws Exception;
     // metodo para insertar un nuevo registro de tipo "RecursoHumanoDTO" en la base de datos
     public boolean InsertRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception;
     // metodo para actualizar un registro existente de tipo "RecursoHumanoDTO" en la base de datos
     public boolean UpdateRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception;
-    
-     public boolean deleteRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception;
+    // metodo para eliminar un registro existente del tipo "RecursoHumanODTO" en la base de datos
+    public boolean deleteRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception;
 }

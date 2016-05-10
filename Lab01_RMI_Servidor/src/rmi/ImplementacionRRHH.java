@@ -55,6 +55,15 @@ public class ImplementacionRRHH extends UnicastRemoteObject implements IRecursoH
     }
     // </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="GetListRecursoHumanoByFiltro">
+    @Override
+    public List<RecursoHumanoDTO> GetListRecursoHumanoByFiltro(RecursoHumanoDTO p_Obj) throws Exception {
+        List<RecursoHumanoDTO> resp = q.GetListRecursoHumanoByFiltro(p_Obj);
+    
+        return resp;
+    }
+    // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="InsertRecursoHumano">
     @Override
     public boolean InsertRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception {
