@@ -332,7 +332,8 @@
                       </a>
                   </p>
                   <div style="display:none">
-                      <form action="LogoutController" method="post">
+                      <form action="LoginController" method="post">
+                        <input type="hidden" name="action" value="Logout">
                         <input id="btnCerrarSesion" type="submit" value="[x]">
                       </form>
                   </div>
