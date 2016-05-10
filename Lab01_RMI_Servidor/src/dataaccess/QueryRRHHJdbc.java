@@ -53,19 +53,19 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
        if(p_Obj != null){
             List<String> whereClausesList = new ArrayList<String>();
 
-            if(!p_Obj.GetNombrePersona().equals("")){
+            if(p_Obj.GetNombrePersona() != null){
                 whereClausesList.add("nombrepersona like '%" + p_Obj.GetNombrePersona() + "%'");
             }
-            if(!p_Obj.GetDepartamento().equals("")){
+            if(p_Obj.GetDepartamento() != null){
                 whereClausesList.add("departamento like '%" + p_Obj.GetDepartamento()+ "%'");
             }
-            if(!p_Obj.GetDireccion().equals("")){
+            if(p_Obj.GetDireccion() != null){
                 whereClausesList.add("direccion like '%" + p_Obj.GetDireccion()+ "%'");
             }
-            if(!p_Obj.GetRegion().equals("")){
+            if(p_Obj.GetRegion() != null){
                 whereClausesList.add("region like '%" + p_Obj.GetRegion()+ "%'");
             }
-            if(!p_Obj.GetComuna().equals("")){
+            if(p_Obj.GetComuna() != null){
                 whereClausesList.add("comuna like '%" + p_Obj.GetComuna() + "%'");
             }
             
