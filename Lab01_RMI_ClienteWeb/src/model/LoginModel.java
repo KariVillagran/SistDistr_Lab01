@@ -50,7 +50,7 @@ public class LoginModel {
                 this.loginRMI = this.conexionRMI.getServidorLogin();
             }
             else{
-                throw new RemoteException("No se ha podido iniciar la conexión con el servidor-rmi");
+                throw new RemoteException("No se ha podido iniciar la conexión con el servidor-rmi!");
             }
             
             objResult = this.loginRMI.ValidarUsuario(p_Obj);

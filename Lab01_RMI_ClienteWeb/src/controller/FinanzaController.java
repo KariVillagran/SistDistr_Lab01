@@ -73,21 +73,15 @@ public class FinanzaController extends HttpServlet {
              {
              case "buscarAll": 
                     List<FinanzaDTO> objResult = this.getFinanzaModel().buscarAll();
-                    System.out.println("controller.FinanzaController.doPost()22");
                     if(objResult != null){
-                        System.out.println("controller.FinanzaController.doPost()33");
-                          System.out.println("controller.FinanzaController.doPost()"+objResult.size());
-                    request.getSession().setAttribute("finanzaAll",objResult); 
-                    rd = request.getRequestDispatcher("/paginas/finanzas/list.jsp");
-                    //Cookie loginCookie = new Cookie("currentUser", objResult.GetUserName());
-                    //loginCookie.setMaxAge(conf.Parameters.PARAM_COOKIE_TIMEOUT * 60);
-                     
-                    
+                        rd = request.getRequestDispatcher("paginas/finanzas/list.jsp");
+                        request.setAttribute("finanzaAllObj", objResult);
                     }
                     else{
-                        rd = request.getRequestDispatcher("home.jsp");
-                        request.setAttribute("error", "Se ha presentado un problema al realizar peticion, conectate  mesa de ayuda");
-                        }
+                        rd = request.getRequestDispatcher("paginas/finanzas/list.jsp");
+                        request.setAttribute("finanzaAllObj", objResult);
+                        request.setAttribute("error", "No existen datos para mostrar!");
+                    }
              break;
              case "buscarId": 
            
@@ -178,8 +172,8 @@ public class FinanzaController extends HttpServlet {
    
         }
         catch(RemoteException ex){
-             rd = request.getRequestDispatcher("login.jsp");
-                request.setAttribute("error", "Ha ocurrido un error en el servidor. Disculpe las molestias :( ");
+            rd = request.getRequestDispatcher("login.jsp");
+            request.setAttribute("error", "Ha ocurrido un error en el servidor. Disculpe las molestias :( ");
                 
             logger.log(Level.WARNING, 
                     String.format("%s %s %s", 
@@ -188,8 +182,8 @@ public class FinanzaController extends HttpServlet {
                             "=> Error al intentar validar el usuario. Detalle: " + ex.getMessage()));
         }
         catch(Exception ex){
-             rd = request.getRequestDispatcher("login.jsp");
-                request.setAttribute("error", "Ha ocurrido un error durante la solicitud. Por favor, intentelo nuevamente");
+            rd = request.getRequestDispatcher("login.jsp");
+            request.setAttribute("error", "Ha ocurrido un error durante la solicitud. Por favor, intentelo nuevamente");
                 
            /* logger.log(Level.WARNING, 
                     String.format("%s %s %s", 
