@@ -49,14 +49,9 @@ public class LoginModel {
             if(this.conexionRMI.iniciarRegistro(Parameters.PARAM_IP_SERVER_RMI, Parameters.PARAM_PORT_SERVER_RMI)){
                 this.loginRMI = this.conexionRMI.getServidorLogin();
             }
-            
-//            objResult = new UsuarioDTO();
-//            
-//            objResult.SetUserName(p_Obj.GetUserName());
-//            objResult.SetPassword(p_Obj.GetPassword());
-//            objResult.SetNombreCompleto("Usuario Prueba");
-//            objResult.SetRol("Recursos Humanos");
-//            objResult.SetId(1);
+            else{
+                throw new RemoteException("No se ha podido iniciar la conexión con el servidor-rmi");
+            }
             
             objResult = this.loginRMI.ValidarUsuario(p_Obj);
         }
