@@ -7,6 +7,7 @@
 <%@tag description="Lab01 - Home Master Page" pageEncoding="UTF-8"%>
 <%@attribute name="userName" fragment="true" %>
 <%@attribute name="pageTitle" fragment="true" %>
+<%@attribute name="pageSubtitle" fragment="true" %>
 <%@attribute name="breadcrumb" fragment="true" %>
 
 <!DOCTYPE html>
@@ -17,21 +18,193 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <!-- Latest compiled and minified CSS -->
-        <link href="Assets/css/bootstrap.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/Assets/css/bootstrap.css" rel="stylesheet">
         <!-- Optional theme -->
-        <link href="Assets/css/bootstrap-theme.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/Assets/css/bootstrap-theme.css" rel="stylesheet">
         <!-- Estilos de Librería Bootstrap Dialog -->
-        <link href="Assets/css/bootstrap-dialog.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/Assets/css/bootstrap-dialog.css" rel="stylesheet">
         <!-- Título de la página -->
-        <title>Lab01 - Inicio de Sesión</title>
+        <title><jsp:invoke fragment="pageTitle"/></title>
         <!-- Agregamos la librería de Jquery -->
-        <script type="text/javascript" src="Assets/scripts/jquery-1.12.3.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/Assets/scripts/jquery-1.12.3.min.js"></script>
         <!-- Agregamos las librería de Bootstrap -->
-        <script type="text/javascript" src="Assets/scripts/bootstrap.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/Assets/scripts/bootstrap.min.js"></script>
         <!-- Agregamos la librería de Bootstrap-Dialog -->
-        <script type="text/javascript" src="Assets/scripts/bootstrap-dialog.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/Assets/scripts/bootstrap-dialog.js"></script>
         <!-- Agregamos la librería de spin.js -->
-        <script type="text/javascript" src="Assets/scripts/spin.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/Assets/scripts/spin.min.js"></script>
+        <!-- Estilos Custom -->
+        <!-- Estilos Custom -->
+        <style type="text/css">
+                /*
+                 * Base structure
+                 */
+
+                /* Move down content because we have a fixed navbar that is 50px tall */
+                body {
+                    padding-top: 50px;
+                }
+
+
+                /*
+                 * Global add-ons
+                 */
+
+                .sub-header {
+                    padding-bottom: 10px;
+                    border-bottom: 1px solid #eee;
+                }
+
+                /*
+                 * Top navigation
+                 * Hide default border to remove 1px line.
+                 */
+                .navbar-fixed-top {
+                    border: 0;
+                }
+
+                /*
+                 * Sidebar
+                 */
+
+                /* Hide for mobile, show later */
+                .sidebar {
+                    display: none;
+                }
+
+                @media (min-width: 768px) {
+                    .sidebar {
+                        position: fixed;
+                        top: 51px;
+                        bottom: 0;
+                        left: 0;
+                        z-index: 1000;
+                        display: block;
+                        padding: 20px;
+                        overflow-x: hidden;
+                        overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+                        background-color: #f5f5f5;
+                        border-right: 1px solid #eee;
+                    }
+                }
+
+                /* Sidebar navigation */
+                .nav-sidebar {
+                    margin-right: -21px; /* 20px padding + 1px border */
+                    margin-bottom: 20px;
+                    margin-left: -20px;
+                }
+
+                    .nav-sidebar > li > a {
+                        padding-right: 20px;
+                        padding-left: 20px;
+                    }
+
+                    .nav-sidebar > .active > a,
+                    .nav-sidebar > .active > a:hover,
+                    .nav-sidebar > .active > a:focus {
+                        color: #fff;
+                        background-color: #428bca;
+                    }
+
+
+                /*
+                 * Main content
+                 */
+
+                .main {
+                    padding: 20px;
+                    margin-top:30px;
+                }
+
+                @media (min-width: 768px) {
+                    .main {
+                        padding-right: 40px;
+                        padding-left: 40px;
+                    }
+                }
+
+                .main .page-header {
+                    margin-top: 0;
+                }
+
+
+                /*
+                 * Placeholder dashboard ideas
+                 */
+
+                .placeholders {
+                    margin-bottom: 30px;
+                    text-align: center;
+                }
+
+                    .placeholders h4 {
+                        margin-bottom: 0;
+                    }
+
+                .placeholder {
+                    margin-bottom: 20px;
+                }
+
+                    .placeholder img {
+                        display: inline-block;
+                        border-radius: 50%;
+                    }
+
+                .userName {
+                    margin-right: 10px;
+                    margin-left: 10px;
+                }
+
+                .navbar-title {
+                    font-size: 1.2em;
+                    color: #072e98 !important;
+                }
+
+                .breadcrumb {
+                    display:block;
+                }
+
+                .breadcrumb > span > li {
+                    display: inline-block;
+                }
+
+                    .breadcrumb > span > li > a:active {
+                        color: #999999;
+                    }
+
+                #divModalLoading {
+                    position: fixed;
+                    z-index: 9999;
+                    height: 100%;
+                    width: 100%;
+                    top: 0;
+                    left: 0;
+                    background-color: Black;
+                    filter: alpha(opacity=60);
+                    opacity: 0.6;
+                    -moz-opacity: 0.8;
+                }
+
+                #divMessageAlert {
+                    margin-top:15px;
+                    margin-bottom:15px;
+                }
+
+                .panel-title {
+                    font-size:14px !important;
+                }
+
+                .control-label {
+                    font-size:12px !important;
+                }
+                .table-custom {
+                    font-size:0.9em !important;
+                }
+                .row-custom {
+                    text-overflow:ellipsis;
+                }
+        </style>
   </head>
   <body>
       <script type="text/javascript">
@@ -145,7 +318,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Sistema Lab01 RMI</a>
+                <a class="navbar-brand" href="#">Sistema Lab01 RMI Web</a>
               </div>
               <div id="navbar" class="navbar-collapse collapse">
                   <p class="navbar-text navbar-right">
@@ -169,11 +342,25 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
-                <ul class="nav nav-sidebar"></ul>    
+                <ul class="nav nav-sidebar">
+                    <li><a href="${pageContext.request.contextPath}/paginas/home.jsp">Inicio</a></li>
+                </ul>
+                
+                <ul class="nav nav-sidebar">
+                    <li><a href="#">Recursos Humanos</a></li>
+                    <li><a href="${pageContext.request.contextPath}/paginas/rrhh/list.jsp">Lista de Datos</a></li>
+                    <li><a href="#">Crear</a></li>
+                 </ul>
+                
+                <ul class="nav nav-sidebar">
+                    <li><a href="#">Finanzas</a></li>
+                    <li><a href="${pageContext.request.contextPath}/paginas/finanzas/list.jsp">Lista de Datos</a></li>
+                    <li><a href="#">Crear</a></li>
+                 </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <h2 class="sub-header">
-                    <jsp:invoke fragment="pageTitle"/>
+                    <jsp:invoke fragment="pageSubtitle"/>
                 </h2>
                 <div id="breadcrumb">
                     <jsp:invoke fragment="breadcrumb"/>

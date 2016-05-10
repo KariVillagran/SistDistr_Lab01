@@ -58,7 +58,7 @@ public class LoginController extends HttpServlet {
             UsuarioDTO objResult = this.getLoginModel().ValidarUsuario(objRequest);
 
             if(objResult != null){
-                rd = request.getRequestDispatcher("home.jsp");
+                rd = request.getRequestDispatcher("paginas/home.jsp");
                 //Cookie loginCookie = new Cookie("currentUser", objResult.GetUserName());
                 //loginCookie.setMaxAge(conf.Parameters.PARAM_COOKIE_TIMEOUT * 60);
                 request.setAttribute("user", objResult);
