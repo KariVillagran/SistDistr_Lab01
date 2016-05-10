@@ -71,8 +71,6 @@
             });
             
             function OnInit() {
-                
-                
                 var _rows = $('[id$=dgvListaDatos]').find('tbody > tr ');
 
                 if (_rows.length > 0) {

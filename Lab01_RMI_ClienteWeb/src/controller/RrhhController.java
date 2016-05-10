@@ -54,12 +54,11 @@ public class RrhhController extends HttpServlet {
         String MPREFIX = "[processRequest(HttpServletRequest request, HttpServletResponse response)]";
         
         String action = request.getParameter("action").toString();
+        RequestDispatcher rd = null;
         
         switch(action){
             case "lista":
                 // <editor-fold defaultstate="collapsed" desc="Lista">
-                RequestDispatcher rd = null;
-                 
                 try{
                 
                     List<RecursoHumanoDTO> objResult = this.getRrhhModel().GetListaRecursosHumanos();
@@ -86,8 +85,8 @@ public class RrhhController extends HttpServlet {
                                     "=> Error al intentar validar el usuario. Detalle: " + ex.getMessage()));
                 }
                 catch(Exception ex){
-                     rd = request.getRequestDispatcher("login.jsp");
-                     request.getSession().removeAttribute("currentUser");
+                     rd = request.getRequestDispatcher("paginas/rrhh//list.jsp");
+                      request.setAttribute("rrhhListObj", null);
                      request.setAttribute("error", "Ha ocurrido un error durante la solicitud. Por favor, intentelo nuevamente");
 
                     logger.log(Level.WARNING, 
@@ -103,6 +102,27 @@ public class RrhhController extends HttpServlet {
                 
             case "nuevo":
                 // <editor-fold defaultstate="collapsed" desc="Nuevo">
+                try{
+                    rd = request.getRequestDispatcher("paginas/rrhh/nuevo.jsp");
+                    request.setAttribute("error", null);
+                }
+                catch(Exception ex){
+                     rd = request.getRequestDispatcher("paginas/home.jsp");
+                     request.setAttribute("error", "Ha ocurrido un error durante la solicitud. Por favor, intentelo nuevamente");
+
+                    logger.log(Level.WARNING, 
+                            String.format("%s %s %s", 
+                                    CPREFIX, 
+                                    MPREFIX, 
+                                    "=> Error al intentar validar el usuario. Detalle: " + ex.getMessage()));
+                }
+
+                rd.forward(request, response);
+                // </editor-fold>
+                break;
+            
+            case "guardarNuevo":
+                // <editor-fold defaultstate="collapsed" desc="Guardar Nuevo">
                 // </editor-fold>
                 break;
                 
@@ -118,26 +138,68 @@ public class RrhhController extends HttpServlet {
                 
             case "buscar":
                 // <editor-fold defaultstate="collapsed" desc="Buscar">
+                try{
+                
+                    RecursoHumanoDTO objFiltro = new RecursoHumanoDTO();
+                    
+                    if(!request.getParameter("nombre").equals("")){
+                        objFiltro.SetNombrePersona(request.getParameter("nombre"));
+                    }
+                    if(!request.getParameter("depto").equals("")){
+                        objFiltro.SetDepartamento(request.getParameter("depto"));
+                    }
+                    if(!request.getParameter("direccion").equals("")){
+                        objFiltro.SetDireccion(request.getParameter("direccion"));
+                    }
+                    if(!request.getParameter("region").equals("")){
+                        objFiltro.SetRegion(request.getParameter("region"));
+                    }
+                    if(!request.getParameter("comuna").equals("")){
+                        objFiltro.SetComuna(request.getParameter("comuna"));
+                    }
+                    
+                    List<RecursoHumanoDTO> objResult = this.getRrhhModel().GetListaRecursosHumanosByFiltro(objFiltro);
+
+                    if(objResult != null){
+                        rd = request.getRequestDispatcher("paginas/rrhh/list.jsp");
+                        request.setAttribute("rrhhListObj", objResult);
+                    }
+                    else{
+                        rd = request.getRequestDispatcher("paginas/rrhh/list.jsp");
+                        request.setAttribute("rrhhListObj", objResult);
+                        request.setAttribute("error", "No existen datos para mostrar!");
+                    }
+                }
+                catch(RemoteException ex){
+                     rd = request.getRequestDispatcher("paginas/rrhh//list.jsp");
+                     request.setAttribute("rrhhListObj", null);
+                     request.setAttribute("error", "Ha ocurrido un error en el servidor. Disculpe las molestias :( ");
+
+                    logger.log(Level.WARNING, 
+                            String.format("%s %s %s", 
+                                    CPREFIX, 
+                                    MPREFIX, 
+                                    "=> Error al intentar validar el usuario. Detalle: " + ex.getMessage()));
+                }
+                catch(Exception ex){
+                     rd = request.getRequestDispatcher("paginas/rrhh//list.jsp");
+                     request.setAttribute("rrhhListObj", null);
+                     request.setAttribute("error", "Ha ocurrido un error durante la solicitud. Por favor, intentelo nuevamente");
+
+                    logger.log(Level.WARNING, 
+                            String.format("%s %s %s", 
+                                    CPREFIX, 
+                                    MPREFIX, 
+                                    "=> Error al intentar validar el usuario. Detalle: " + ex.getMessage()));
+                }
+
+                rd.forward(request, response);
                 // </editor-fold>
                 break;
                 
             default:
                 break;
         }    
-        
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet RrhhController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet RrhhController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

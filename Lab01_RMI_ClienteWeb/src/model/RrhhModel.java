@@ -42,6 +42,8 @@ public class RrhhModel {
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="metodos publicos">
+    
+    // <editor-fold defaultstate="collapsed" desc="GetListaRecursosHumanos">
     public List<RecursoHumanoDTO> GetListaRecursosHumanos() throws Exception, RemoteException{
         List<RecursoHumanoDTO> objResult = null;
         
@@ -62,5 +64,122 @@ public class RrhhModel {
         
         return objResult;
     }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="GetListaRecursosHumanosByFiltro">
+    public List<RecursoHumanoDTO> GetListaRecursosHumanosByFiltro(RecursoHumanoDTO p_Filtro) throws Exception, RemoteException{
+        List<RecursoHumanoDTO> objResult = null;
+        
+        try{
+            // Iniciamos el registro del RMI
+            if(this.conexionRMI.iniciarRegistro(Parameters.PARAM_IP_SERVER_RMI, Parameters.PARAM_PORT_SERVER_RMI)){
+                this.rrhhRMI = this.conexionRMI.getServidorRRHH();
+            }
+            
+            objResult = this.rrhhRMI.GetListRecursoHumanoByFiltro(p_Filtro);
+        }
+        catch(RemoteException ex){
+            throw ex;
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        
+        return objResult;
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="GetRecursoHumanoById">
+    public RecursoHumanoDTO GetRecursoHumanoById(int p_Id) throws Exception, RemoteException{
+        RecursoHumanoDTO objResult = null;
+        
+        try{
+            // Iniciamos el registro del RMI
+            if(this.conexionRMI.iniciarRegistro(Parameters.PARAM_IP_SERVER_RMI, Parameters.PARAM_PORT_SERVER_RMI)){
+                this.rrhhRMI = this.conexionRMI.getServidorRRHH();
+            }
+            
+            objResult = this.rrhhRMI.GetRecursoHumanoById(p_Id);
+        }
+        catch(RemoteException ex){
+            throw ex;
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        
+        return objResult;
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="InsertRecursoHumano">
+    public boolean InsertRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception, RemoteException{
+        boolean objResult = false;
+        
+        try{
+            // Iniciamos el registro del RMI
+            if(this.conexionRMI.iniciarRegistro(Parameters.PARAM_IP_SERVER_RMI, Parameters.PARAM_PORT_SERVER_RMI)){
+                this.rrhhRMI = this.conexionRMI.getServidorRRHH();
+            }
+            
+            objResult = this.rrhhRMI.InsertRecursoHumano(p_Obj);
+        }
+        catch(RemoteException ex){
+            throw ex;
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        
+        return objResult;
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="UpdateRecursoHumano">
+    public boolean UpdateRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception, RemoteException{
+        boolean objResult = false;
+        
+        try{
+            // Iniciamos el registro del RMI
+            if(this.conexionRMI.iniciarRegistro(Parameters.PARAM_IP_SERVER_RMI, Parameters.PARAM_PORT_SERVER_RMI)){
+                this.rrhhRMI = this.conexionRMI.getServidorRRHH();
+            }
+            
+            objResult = this.rrhhRMI.UpdateRecursoHumano(p_Obj);
+        }
+        catch(RemoteException ex){
+            throw ex;
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        
+        return objResult;
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="DeleteRecursoHumano">
+    public boolean DeleteRecursoHumano(RecursoHumanoDTO p_Obj) throws Exception, RemoteException{
+        boolean objResult = false;
+        
+        try{
+            // Iniciamos el registro del RMI
+            if(this.conexionRMI.iniciarRegistro(Parameters.PARAM_IP_SERVER_RMI, Parameters.PARAM_PORT_SERVER_RMI)){
+                this.rrhhRMI = this.conexionRMI.getServidorRRHH();
+            }
+            
+            objResult = this.rrhhRMI.deleteRecursoHumano(p_Obj);
+        }
+        catch(RemoteException ex){
+            throw ex;
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        
+        return objResult;
+    }
+    // </editor-fold>
+    
     // </editor-fold>
 }
