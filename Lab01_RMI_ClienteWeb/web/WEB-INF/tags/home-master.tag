@@ -10,6 +10,35 @@
 <%@attribute name="pageSubtitle" fragment="true" %>
 <%@attribute name="breadcrumb" fragment="true" %>
 
+<%
+     if(request.getSession().getAttribute("currentUser") == null){
+           request.setAttribute("sessionOver", "sessionOver");
+           request.setAttribute("error", null);
+           request.removeAttribute("userName");
+           request.getSession().removeAttribute("currentUser");
+     }
+     else{
+         String currentMenu = "";
+         dto.UsuarioDTO currentUser = (dto.UsuarioDTO)request.getSession().getAttribute("currentUser");
+         
+         if(currentUser.GetRol().toLowerCase().equals("finanzas")){
+             currentMenu += "<ul class=\"nav nav-sidebar\">";
+             currentMenu += "<li><a href=\"#\">Finanzas</a></li>";
+             currentMenu += "<li><a href=\"" + request.getContextPath() + "/FinanzaController?transaccion=buscarAll\">Lista de Datos</a></li>";
+             currentMenu += "<li><a href=\"" + request.getContextPath() + "/FinanzaController?transaccion=mantenedor\">Crear</a></li>";
+             currentMenu += "</ul>";
+         }
+         else if(currentUser.GetRol().toLowerCase().equals("recursos humanos")){
+             currentMenu += "<ul class=\"nav nav-sidebar\">";
+             currentMenu += "<li><a href=\"#\">Recursos Humanos</a></li>";
+             currentMenu += "<li><a href=\"" + request.getContextPath() + "/RrhhController?action=lista\">Lista de Datos</a></li>";
+             currentMenu += "<li><a href=\"" + request.getContextPath() + "/RrhhController?action=crear\">Crear</a></li>";
+             currentMenu += "</ul>";
+         }
+         
+         request.setAttribute("currentMenuOptions", currentMenu);
+     }
+%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -308,6 +337,12 @@
                 else{
                     CleanMessageDialog();
                 }
+                
+                // Current Session State
+                var _sState = '${sessionOver}';
+                if(_sState != ''){
+                    $('#btnCerrarSesion').click();
+                }
             });
         </script>
         
@@ -370,17 +405,8 @@
                     <li><a href="${pageContext.request.contextPath}/paginas/home.jsp">Inicio</a></li>
                 </ul>
                 
-                <ul class="nav nav-sidebar">
-                    <li><a href="#">Recursos Humanos</a></li>
-                    <li><a href="${pageContext.request.contextPath}/RrhhController?action=lista">Lista de Datos</a></li>
-                    <li><a href="${pageContext.request.contextPath}/RrhhController?action=crear">Crear</a></li>
-                 </ul>
-                
-                <ul class="nav nav-sidebar">
-                    <li><a href="#">Finanzas</a></li>
-                    <li><a href="${pageContext.request.contextPath}/FinanzaController?transaccion=buscarAll">Lista de Datos</a></li>
-                    <li><a href="${pageContext.request.contextPath}/FinanzaController?transaccion=mantenedor">Crear</a></li>
-                 </ul>
+                <!-- Menu Actual del Usuario-->
+                ${currentMenuOptions}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <h2 class="sub-header">

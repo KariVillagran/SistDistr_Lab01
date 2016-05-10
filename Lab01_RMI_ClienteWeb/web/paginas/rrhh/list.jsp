@@ -13,27 +13,34 @@
     String _htmlBody = "";
     
     if(request.getAttribute("rrhhListObj") != null){
-        
         List<RecursoHumanoDTO> objList = (List<RecursoHumanoDTO>)request.getAttribute("rrhhListObj");
-        
-        for(int x = 0; x < objList.size(); x++){
-            _htmlBody += "<tr>";
-            _htmlBody += "<td>" +
-                         "<a href=\"javascript:void(0)\" onclick=\"EditarUsuario(this)\"><span class=\"glyphicon glyphicon-pencil\" title=\"Editar\">&nbsp;</span></a>&nbsp;" +
-                         "<a href=\"javascript:void(0)\" onclick=\"EliminarUsuario(this)\"><span class=\"glyphicon glyphicon-remove\" title=\"Eliminar\">&nbsp;</span></a>" +
-                         "</td>";
-            _htmlBody += "<td>" + objList.get(x).GetId() + "</td>";
-            _htmlBody += "<td>" + objList.get(x).GetNombrePersona() + "</td>";
-            _htmlBody += "<td>" + objList.get(x).GetFchNacimiento().toString() + "</td>";
-            _htmlBody += "<td>" + objList.get(x).GetDireccion() + "</td>";
-            _htmlBody += "<td>" + objList.get(x).GetComuna() + "</td>";
-            _htmlBody += "<td>" + objList.get(x).GetRegion() + "</td>";
-            _htmlBody += "<td>" + objList.get(x).GetEmail() + "</td>";
-            _htmlBody += "<td>" + objList.get(x).GetTelefono() + "</td>";
-            _htmlBody += "<td>" + objList.get(x).GetSexo() + "</td>";
-            _htmlBody += "<td>" + objList.get(x).GetFchContrato().toString() + "</td>";
-            _htmlBody += "<td>" + objList.get(x).GetDepartamento() + "</td>";
-            _htmlBody += "</tr>";
+        if(objList.size() > 0){
+            for(int x = 0; x < objList.size(); x++){
+                _htmlBody += "<tr>";
+                _htmlBody += "<td>" +
+                             "<a href=\"RrhhController?action=editar&id=" + objList.get(x).GetId() + "\">" +
+                                "<span class=\"glyphicon glyphicon-pencil\" title=\"Editar\">&nbsp;</span></a>&nbsp;" +
+                             "<a href=\"javascript:void(0)\" onclick=\"EliminarUsuario('" + objList.get(x).GetId() + "')\">" + 
+                                "<span class=\"glyphicon glyphicon-remove\" title=\"Eliminar\">&nbsp;</span></a>" +
+                             "</td>";
+                _htmlBody += "<td>" + objList.get(x).GetId() + "</td>";
+                _htmlBody += "<td>" + objList.get(x).GetNombrePersona() + "</td>";
+                _htmlBody += "<td>" + objList.get(x).GetFchNacimiento().toString() + "</td>";
+                _htmlBody += "<td>" + objList.get(x).GetDireccion() + "</td>";
+                _htmlBody += "<td>" + objList.get(x).GetComuna() + "</td>";
+                _htmlBody += "<td>" + objList.get(x).GetRegion() + "</td>";
+                _htmlBody += "<td>" + objList.get(x).GetEmail() + "</td>";
+                _htmlBody += "<td>" + objList.get(x).GetTelefono() + "</td>";
+                _htmlBody += "<td>" + objList.get(x).GetSexo() + "</td>";
+                _htmlBody += "<td>" + objList.get(x).GetFchContrato().toString() + "</td>";
+                _htmlBody += "<td>" + objList.get(x).GetDepartamento() + "</td>";
+                _htmlBody += "</tr>";
+            }
+        }
+        else{
+             _htmlBody += "<tr>" +
+                     "<td colspan=\"12\">No hay datos para mostrar...</td>" +
+                     "</tr>";
         }
     }
     else{
@@ -86,6 +93,22 @@
                             });
                         }
                     });
+                }
+                
+                var _msjInfo = '${requestScope['infocreate']}';
+                if(_msjInfo != ''){
+                    ShowMessageDialog('alert-info', 'Lab01 - Información', _msjInfo);
+                }
+                else{
+                    CleanMessageDialog();
+                }
+            }
+            
+            function EliminarUsuario(id){
+                var result = confirm('¿Desea eliminar el usuario?');
+                
+                if(result){
+                    location.href = 'RrhhController?action=eliminar&id=' + id;
                 }
             }
         </script>

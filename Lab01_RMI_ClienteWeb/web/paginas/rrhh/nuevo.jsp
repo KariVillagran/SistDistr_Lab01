@@ -36,11 +36,11 @@
                 <div class="row">
                     <div class="col-xs-12 col-md-8">
                          <div class="form-group">
-                             <label class="control-label col-sm-2" for="txtNombre">Nombre:</label>
+                             <label class="control-label col-sm-2" for="nombre">Nombre:</label>
                              <div class="col-sm-10">
-                                 <input type="text" class="form-control" id="txtNombre" name="txtNombre" 
+                                 <input type="text" class="form-control" id="txtNombre" name="nombre" 
                                      required="required" placeholder="Nombre" maxlength="100">
-                             </div>
+                             </div>  
                          </div>
                     </div>
                     <div class="col-xs-6 col-md-4">
@@ -116,6 +116,19 @@
                 <div class="row">
                     <div class="col-xs-12 col-md-8">
                          <div class="form-group">
+                             <label class="control-label col-sm-2" for="telefono">Tel&eacute;fono</label>
+                             <div class="col-sm-10">
+                                <input type="text" class="form-control" id="txtTelefono" name="telefono" 
+                                       required="required" placeholder="Teléfono" maxlength="25">
+                             </div>
+                         </div>
+                    </div>
+                    <div class="col-xs-6 col-md-4">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-8">
+                         <div class="form-group">
                              <label class="control-label col-sm-2" for="fchNacimiento">Fecha Nacimiento:</label>
                              <div class="col-sm-10">
                                  <input type="date" class="form-control" id="txtFchNacimiento" name="fchNacimiento" 
@@ -176,7 +189,8 @@
                     </div>
                     <div class="col-xs-6 col-md-4">
                         <input type="submit" value="Guardar" class="btn btn-success"> &nbsp;
-                        <input type="button" value="Volver" class="btn btn-default" formnovalidate="formnovalidate">
+                        <input type="button" value="Volver" class="btn btn-default" onclick="javacript:location.href = 'RrhhController?action=lista'"
+                               formnovalidate="formnovalidate">
                     </div>
                     <div class="col-xs-6 col-md-4">
                     </div>

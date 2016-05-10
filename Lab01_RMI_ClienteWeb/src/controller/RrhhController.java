@@ -9,6 +9,7 @@ import dto.RecursoHumanoDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.rmi.RemoteException;
+import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,6 +42,8 @@ public class RrhhController extends HttpServlet {
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="eventos">
+    
+    // <editor-fold defaultstate="collapsed" desc="processRequest">
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -124,16 +127,229 @@ public class RrhhController extends HttpServlet {
             
             case "guardarNuevo":
                 // <editor-fold defaultstate="collapsed" desc="Guardar Nuevo">
+                try{
+                    RecursoHumanoDTO objRequest = new RecursoHumanoDTO();
+
+                    objRequest.SetNombrePersona(request.getParameter("nombre"));
+                    objRequest.SetDepartamento(request.getParameter("depto"));
+                    objRequest.SetDireccion(request.getParameter("direccion"));
+                    objRequest.SetRegion(request.getParameter("region"));
+                    objRequest.SetComuna(request.getParameter("comuna"));
+                    objRequest.SetEmail(request.getParameter("email"));
+                    objRequest.SetFchNacimiento(Date.valueOf(request.getParameter("fchNacimiento")));
+                    objRequest.SetFchContrato(Date.valueOf(request.getParameter("fchContrato")));
+                    objRequest.SetSexo(request.getParameter("sexo"));
+                    objRequest.SetTelefono(request.getParameter("telefono"));
+                    
+                    boolean resultInsert = this.getRrhhModel().InsertRecursoHumano(objRequest);
+                    List<RecursoHumanoDTO> objResult = this.getRrhhModel().GetListaRecursosHumanos();
+                    
+                    if(resultInsert){
+                        if(objResult != null){
+                            rd = request.getRequestDispatcher("paginas/rrhh/list.jsp");
+                            request.setAttribute("infocreate", "El registro ha sido creado satisfactoriamente :)");
+                            request.setAttribute("rrhhListObj", objResult);
+                        }
+                        else{
+                            rd = request.getRequestDispatcher("paginas/rrhh/nuevo.jsp");
+                            request.setAttribute("rrhhListObj", objResult);
+                            request.setAttribute("error", "No se ha podido crear el registro :(");
+                        }
+                    }
+                    else{
+                        rd = request.getRequestDispatcher("paginas/rrhh/nuevo.jsp");
+                        request.setAttribute("rrhhListObj", objResult);
+                        request.setAttribute("error", "No se ha podido crear el registro :(");
+                    }
+                }
+                catch(RemoteException ex){
+                     rd = request.getRequestDispatcher("paginas/rrhh/nuevo.jsp");
+                     request.setAttribute("rrhhListObj", null);
+                     request.setAttribute("error", "Ha ocurrido un error en el servidor. Disculpe las molestias :( ");
+
+                    logger.log(Level.WARNING, 
+                            String.format("%s %s %s", 
+                                    CPREFIX, 
+                                    MPREFIX, 
+                                    "=> Error al intentar validar el usuario. Detalle: " + ex.getMessage()));
+                }
+                catch(Exception ex){
+                     rd = request.getRequestDispatcher("paginas/rrhh/nuevo.jsp");
+                     request.setAttribute("rrhhListObj", null);
+                     request.setAttribute("error", "Ha ocurrido un error durante la solicitud. Por favor, intentelo nuevamente");
+
+                    logger.log(Level.WARNING, 
+                            String.format("%s %s %s", 
+                                    CPREFIX, 
+                                    MPREFIX, 
+                                    "=> Error al intentar validar el usuario. Detalle: " + ex.getMessage()));
+                }
+
+                rd.forward(request, response);
                 // </editor-fold>
                 break;
                 
             case "editar":
                 // <editor-fold defaultstate="collapsed" desc="Editar">
+                try{
+                    int idRrHH = Integer.parseInt(request.getParameter("id"));
+                    RecursoHumanoDTO objResult = this.getRrhhModel().GetRecursoHumanoById(idRrHH);
+
+                    if(objResult != null){
+                        rd = request.getRequestDispatcher("paginas/rrhh/editar.jsp");
+                        request.setAttribute("rrhhObj", objResult);
+                    }
+                    else{
+                        rd = request.getRequestDispatcher("paginas/rrhh/editar.jsp");
+                        request.setAttribute("rrhhObj", objResult);
+                        request.setAttribute("error", "No existen datos para mostrar!");
+                    }
+                }
+                catch(RemoteException ex){
+                     rd = request.getRequestDispatcher("paginas/rrhh/list.jsp");
+                     request.setAttribute("rrhhListObj", null);
+                     request.setAttribute("error", "Ha ocurrido un error en el servidor. Disculpe las molestias :( ");
+
+                    logger.log(Level.WARNING, 
+                            String.format("%s %s %s", 
+                                    CPREFIX, 
+                                    MPREFIX, 
+                                    "=> Error al intentar validar el usuario. Detalle: " + ex.getMessage()));
+                }
+                catch(Exception ex){
+                     rd = request.getRequestDispatcher("paginas/rrhh//list.jsp");
+                      request.setAttribute("rrhhListObj", null);
+                     request.setAttribute("error", "Ha ocurrido un error durante la solicitud. Por favor, intentelo nuevamente");
+
+                    logger.log(Level.WARNING, 
+                            String.format("%s %s %s", 
+                                    CPREFIX, 
+                                    MPREFIX, 
+                                    "=> Error al intentar validar el usuario. Detalle: " + ex.getMessage()));
+                }
+
+                rd.forward(request, response);
+                // </editor-fold>
+                break;
+            
+            case "guardarEditar":
+                // <editor-fold defaultstate="collapsed" desc="Guardar Editar">
+                try{
+                    RecursoHumanoDTO objRequest = new RecursoHumanoDTO();
+
+                    objRequest.SetId(Integer.parseInt(request.getParameter("id")));
+                    objRequest.SetNombrePersona(request.getParameter("nombre"));
+                    objRequest.SetDepartamento(request.getParameter("depto"));
+                    objRequest.SetDireccion(request.getParameter("direccion"));
+                    objRequest.SetRegion(request.getParameter("region"));
+                    objRequest.SetComuna(request.getParameter("comuna"));
+                    objRequest.SetEmail(request.getParameter("email"));
+                    objRequest.SetFchNacimiento(Date.valueOf(request.getParameter("fchNacimiento")));
+                    objRequest.SetFchContrato(Date.valueOf(request.getParameter("fchContrato")));
+                    objRequest.SetSexo(request.getParameter("sexo"));
+                    objRequest.SetTelefono(request.getParameter("telefono"));
+                    
+                    boolean resultUpdate = this.getRrhhModel().UpdateRecursoHumano(objRequest);
+                    List<RecursoHumanoDTO> objResult = this.getRrhhModel().GetListaRecursosHumanos();
+                    
+                    if(resultUpdate){
+                        if(objResult != null){
+                            rd = request.getRequestDispatcher("paginas/rrhh/list.jsp");
+                            request.setAttribute("infocreate", "El registro ha sido editado satisfactoriamente :)");
+                            request.setAttribute("rrhhListObj", objResult);
+                        }
+                        else{
+                            rd = request.getRequestDispatcher("paginas/rrhh/editar.jsp");
+                            request.setAttribute("rrhhListObj", objResult);
+                            request.setAttribute("error", "No se ha podido editar el registro :(");
+                        }
+                    }
+                    else{
+                        rd = request.getRequestDispatcher("paginas/rrhh/editar.jsp");
+                        request.setAttribute("rrhhListObj", objResult);
+                        request.setAttribute("error", "No se ha podido editar el registro :(");
+                    }
+                }
+                catch(RemoteException ex){
+                     rd = request.getRequestDispatcher("paginas/rrhh/editar.jsp");
+                     request.setAttribute("rrhhListObj", null);
+                     request.setAttribute("error", "Ha ocurrido un error en el servidor. Disculpe las molestias :( ");
+
+                    logger.log(Level.WARNING, 
+                            String.format("%s %s %s", 
+                                    CPREFIX, 
+                                    MPREFIX, 
+                                    "=> Error al intentar validar el usuario. Detalle: " + ex.getMessage()));
+                }
+                catch(Exception ex){
+                     rd = request.getRequestDispatcher("paginas/rrhh/editar.jsp");
+                     request.setAttribute("rrhhListObj", null);
+                     request.setAttribute("error", "Ha ocurrido un error durante la solicitud. Por favor, intentelo nuevamente");
+
+                    logger.log(Level.WARNING, 
+                            String.format("%s %s %s", 
+                                    CPREFIX, 
+                                    MPREFIX, 
+                                    "=> Error al intentar validar el usuario. Detalle: " + ex.getMessage()));
+                }
+
+                rd.forward(request, response);
                 // </editor-fold>
                 break;
                 
             case "eliminar":
                 // <editor-fold defaultstate="collapsed" desc="Eliminar">
+                try{
+                    int idRrHH = Integer.parseInt(request.getParameter("id"));
+                    
+                    RecursoHumanoDTO objDelete = new RecursoHumanoDTO();
+                    objDelete.SetId(idRrHH);
+                    
+                    boolean deleteResult = this.getRrhhModel().DeleteRecursoHumano(objDelete);
+                    List<RecursoHumanoDTO> objResult = this.getRrhhModel().GetListaRecursosHumanos();
+                    
+                    if(deleteResult){
+                        if(objResult != null){
+                            rd = request.getRequestDispatcher("paginas/rrhh/list.jsp");
+                            request.setAttribute("infocreate", "El registro ha sido eliminado satisfactoriamente :)");
+                            request.setAttribute("rrhhListObj", objResult);
+                        }
+                        else{
+                            rd = request.getRequestDispatcher("paginas/rrhh/list.jsp");
+                            request.setAttribute("rrhhListObj", objResult);
+                            request.setAttribute("error", "No se ha podido eliminar el registro :(");
+                        }
+                    }
+                    else{
+                        rd = request.getRequestDispatcher("paginas/rrhh/list.jsp");
+                        request.setAttribute("rrhhListObj", objResult);
+                        request.setAttribute("error", "No se ha podido eliminar el registro :(");
+                    }
+                }
+                catch(RemoteException ex){
+                     rd = request.getRequestDispatcher("paginas/rrhh/list.jsp");
+                     request.setAttribute("rrhhListObj", null);
+                     request.setAttribute("error", "Ha ocurrido un error en el servidor. Disculpe las molestias :( ");
+
+                    logger.log(Level.WARNING, 
+                            String.format("%s %s %s", 
+                                    CPREFIX, 
+                                    MPREFIX, 
+                                    "=> Error al intentar validar el usuario. Detalle: " + ex.getMessage()));
+                }
+                catch(Exception ex){
+                     rd = request.getRequestDispatcher("paginas/rrhh//list.jsp");
+                      request.setAttribute("rrhhListObj", null);
+                     request.setAttribute("error", "Ha ocurrido un error durante la solicitud. Por favor, intentelo nuevamente");
+
+                    logger.log(Level.WARNING, 
+                            String.format("%s %s %s", 
+                                    CPREFIX, 
+                                    MPREFIX, 
+                                    "=> Error al intentar validar el usuario. Detalle: " + ex.getMessage()));
+                }
+
+                rd.forward(request, response);
                 // </editor-fold>
                 break;
                 
@@ -202,7 +418,8 @@ public class RrhhController extends HttpServlet {
                 break;
         }    
     }
-
+    // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

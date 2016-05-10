@@ -24,7 +24,13 @@
          </ul>
     </jsp:attribute>
     <jsp:body>
-        <p>P&aacute;gina con Masterpage de prueba!</p>
+        <p>Bienvenido(a): <b>${sessionScope.currentUser.GetNombreCompleto()}</b>, al <u>Sistema Lab01 RMI Web</u> :D!!</p>
+        <br/>
+        <p>En este sitema podr&aacute;s probar la funcionalidad de una arquitectura Cliente-Servidor.</p>
+        <p>Utiliza los diferentes mantenedores para realizar las pruebas respectivas.</p>
+        <br/>
+        <p>Por cualquier referencia al c&oacute;digo fuente, dir&iacute;gete a la siguiente p&aacute;gina web: 
+            <a href="https://github.com/aledev/SistDistr_Lab01" target="_blank">github.com/aledev/SistDistr_Lab01</a></p>
     </jsp:body>
 </mp:home-master>
 
