@@ -46,10 +46,8 @@ public class LoginController extends HttpServlet {
         
         String action = request.getParameter("action");
         
-        if(action.equals("Login")){
-            
-            // <editor-fold defaultstate="collapsed" desc="Login">
-            
+        if(action.equals("Login")){ 
+            // <editor-fold defaultstate="collapsed" desc="Login">            
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             RequestDispatcher rd = null;
@@ -101,11 +99,9 @@ public class LoginController extends HttpServlet {
             }
 
             rd.forward(request, response);
-            
             // </editor-fold>
         }
-        else if(action.equals("Logout")){
-            
+        else if(action.equals("Logout")){           
             // <editor-fold defaultstate="collapsed" desc="Logout">
              RequestDispatcher rd = null;
 
@@ -128,8 +124,7 @@ public class LoginController extends HttpServlet {
             }
 
             rd.forward(request, response);
-            // </editor-fold>
-            
+            // </editor-fold>            
         }
         
     }

@@ -359,8 +359,8 @@
                 
                 <ul class="nav nav-sidebar">
                     <li><a href="#">Recursos Humanos</a></li>
-                    <li><a href="${pageContext.request.contextPath}/paginas/rrhh/list.jsp">Lista de Datos</a></li>
-                    <li><a href="#">Crear</a></li>
+                    <li><a href="${pageContext.request.contextPath}/RrhhController?action=lista">Lista de Datos</a></li>
+                    <li><a href="${pageContext.request.contextPath}/RrhhController?action=crear">Crear</a></li>
                  </ul>
                 
                 <ul class="nav nav-sidebar">
