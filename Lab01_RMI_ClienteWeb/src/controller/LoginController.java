@@ -67,16 +67,20 @@ public class LoginController extends HttpServlet {
                     rd = request.getRequestDispatcher("paginas/home.jsp");
                     //Cookie loginCookie = new Cookie("currentUser", objResult.GetUserName());
                     //loginCookie.setMaxAge(conf.Parameters.PARAM_COOKIE_TIMEOUT * 60);
-                    request.setAttribute("user", objResult);
+                    //response.addCookie(loginCookie);
+                    request.getSession().setAttribute("currentUser", objResult);
+                    request.setAttribute("userName", objResult);
                 }
                 else{
                     rd = request.getRequestDispatcher("login.jsp");
+                    request.getSession().removeAttribute("currentUser");
                     request.setAttribute("error", "Usuario y/o Contraseña incorrectos!");
                 }
             }
             catch(RemoteException ex){
                  rd = request.getRequestDispatcher("login.jsp");
-                    request.setAttribute("error", "Ha ocurrido un error en el servidor. Disculpe las molestias :( ");
+                 request.getSession().removeAttribute("currentUser");
+                 request.setAttribute("error", "Ha ocurrido un error en el servidor. Disculpe las molestias :( ");
 
                 logger.log(Level.WARNING, 
                         String.format("%s %s %s", 
@@ -86,7 +90,8 @@ public class LoginController extends HttpServlet {
             }
             catch(Exception ex){
                  rd = request.getRequestDispatcher("login.jsp");
-                    request.setAttribute("error", "Ha ocurrido un error durante la solicitud. Por favor, intentelo nuevamente");
+                 request.getSession().removeAttribute("currentUser");
+                 request.setAttribute("error", "Ha ocurrido un error durante la solicitud. Por favor, intentelo nuevamente");
 
                 logger.log(Level.WARNING, 
                         String.format("%s %s %s", 
@@ -107,11 +112,13 @@ public class LoginController extends HttpServlet {
             try{
                 rd = request.getRequestDispatcher("login.jsp");
                 request.setAttribute("error", null);
-                request.removeAttribute("user");
+                request.removeAttribute("userName");
+                request.getSession().removeAttribute("currentUser");
             }
             catch(Exception ex){
                  rd = request.getRequestDispatcher("login.jsp");
-                    request.setAttribute("error", "Ha ocurrido un error durante la solicitud. Por favor, intentelo nuevamente");
+                 request.getSession().removeAttribute("currentUser");
+                 request.setAttribute("error", "Ha ocurrido un error durante la solicitud. Por favor, intentelo nuevamente");
 
                 logger.log(Level.WARNING, 
                         String.format("%s %s %s", 

@@ -4,7 +4,8 @@
     Author     : aialiagam
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="dto.UsuarioDTO"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
 <%@taglib prefix="mp" tagdir="/WEB-INF/tags" %>
 
 <mp:home-master>
@@ -12,7 +13,7 @@
       Lab01 - Home
     </jsp:attribute>
     <jsp:attribute name="userName">
-      ${requestScope['user'].GetUserName()}
+        ${sessionScope.currentUser.GetUserName()}
     </jsp:attribute>
     <jsp:attribute name="pageSubtitle">
       Lab01 - P&aacute;gina de Inicio
