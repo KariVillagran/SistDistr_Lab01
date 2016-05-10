@@ -301,8 +301,17 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
             String sql="INSERT INTO public.recursohumano(" +
             "id, nombrepersona, fchnacimiento, direccion, comuna, region, " +
             "email, telefono, sexo, fchcontrato, departamento)" +
-            "VALUES (nextval('rrhh'),'"+p_Obj.GetNombrePersona()+"','"+p_Obj.GetFchNacimiento()+"','"+p_Obj.GetDireccion()+"','"+p_Obj.GetComuna()+"','"+p_Obj.GetRegion()+"','" +
-             ""+p_Obj.GetEmail()+"','"+p_Obj.GetTelefono()+"','"+p_Obj.GetSexo()+"','"+p_Obj.GetFchContrato()+"','"+p_Obj.GetDepartamento()+"');";
+            "VALUES ((select (coalesce(max(id),0) + 1) from recursohumano),'" + 
+                    p_Obj.GetNombrePersona()+"','" +
+                    p_Obj.GetFchNacimiento()+"','" + 
+                    p_Obj.GetDireccion()+"','" + 
+                    p_Obj.GetComuna()+"','" + 
+                    p_Obj.GetRegion()+"','" + 
+                    p_Obj.GetEmail()+"','" + 
+                    p_Obj.GetTelefono()+"','"+ 
+                    p_Obj.GetSexo()+"','"+
+                    p_Obj.GetFchContrato()+"','"+
+                    p_Obj.GetDepartamento()+"');";
             
             int rs = stmt.executeUpdate(sql);
             salida=rs;
