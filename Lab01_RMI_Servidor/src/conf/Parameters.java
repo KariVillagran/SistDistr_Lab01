@@ -15,7 +15,7 @@ public class Parameters {
     // propiedades estáticas
     public static String PARAM_DB_CONN_STRING = "jdbc:postgresql://localhost:5432/sistdis_lab01";
     public static String PARAM_DB_USER = "postgres";
-    public static String PARAM_DB_PASS = "usach2016";
+    public static String PARAM_DB_PASS = "Ayuda123";
     public static int PARAM_SERVER_RMI_PORT = 2014;
     // </editor-fold>
 }

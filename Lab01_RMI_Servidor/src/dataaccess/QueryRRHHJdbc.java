@@ -158,7 +158,7 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
                objResult.SetTelefono(rs.getString("telefono"));
                objResult.SetSexo(rs.getString("sexo"));
                objResult.SetFchContrato(rs.getDate("fchcontrato"));
-               objResult.SetDireccion(rs.getString("departamento"));
+               objResult.SetDepartamento(rs.getString("departamento"));
                lista.add(objResult);
             }
             
