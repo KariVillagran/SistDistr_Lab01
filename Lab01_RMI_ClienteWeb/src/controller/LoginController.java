@@ -35,6 +35,7 @@ public class LoginController extends HttpServlet {
     // <editor-fold defaultstate="collapsed" desc="constructores">
     public LoginController() {
         super();        
+        logger = Logger.getLogger(getClass().getName());
     }
     // </editor-fold>
     

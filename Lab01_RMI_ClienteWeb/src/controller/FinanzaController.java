@@ -36,6 +36,7 @@ public class FinanzaController extends HttpServlet {
     // <editor-fold defaultstate="collapsed" desc="constructores">
     public FinanzaController() {
         super();        
+        logger = Logger.getLogger(getClass().getName());
     }
     // </editor-fold>
     

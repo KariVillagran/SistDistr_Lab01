@@ -95,7 +95,7 @@
             <h3 class="panel-title"><a href="#" onclick="ShowHideFilter(this)"><span class="glyphicon glyphicon-menu-up"></span></a> &nbsp; Filtro de B&uacute;squeda</h3>
           </div>
           <form id="formBuscar" action="RrhhController" method="post">
-            <input type="hidden" name="action" value="Buscar">
+            <input type="hidden" name="action" value="buscar">
             <div class="panel-body">
               <div class="row">
                   <div class="col-xs-6 col-md-4">
@@ -175,8 +175,10 @@
                 <div class="col-xs-6 col-md-4">
                 </div>
                 <div class="col-xs-6 col-md-4 text-right">
-                    <asp:Button ID="btnCrearNuevo" CssClass="btn btn-primary" runat="server" Text="Crear Nuevo" />
-                    <asp:Button ID="btnExportarExcel" CssClass="btn btn-success" runat="server" Text="Exportar Excel" />
+                    <form id="formCrearNuevo" action="RrhhController" method="post">
+                        <input type="hidden" name="action" value="nuevo">
+                        <input type="submit" value="Crear Nuevo" class="btn btn-primary">
+                    </form>
                 </div>
             </div>
             <br />

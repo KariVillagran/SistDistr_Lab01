@@ -170,11 +170,12 @@
                     <div class="col-xs-6 col-md-4">
                     </div>
                 </div>
+                <br/>
                 <div class="row">
                     <div class="col-xs-6 col-md-4">
                     </div>
                     <div class="col-xs-6 col-md-4">
-                        <input type="submit" value="Guardar" class="btn btn-success"> &nbps;
+                        <input type="submit" value="Guardar" class="btn btn-success"> &nbsp;
                         <input type="button" value="Volver" class="btn btn-default" formnovalidate="formnovalidate">
                     </div>
                     <div class="col-xs-6 col-md-4">

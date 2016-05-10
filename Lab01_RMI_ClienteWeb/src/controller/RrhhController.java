@@ -36,6 +36,7 @@ public class RrhhController extends HttpServlet {
     // <editor-fold defaultstate="collapsed" desc="constructores">
     public RrhhController() {
         super();        
+        logger = Logger.getLogger(getClass().getName());
     }
     // </editor-fold>
     
@@ -74,7 +75,7 @@ public class RrhhController extends HttpServlet {
                     }
                 }
                 catch(RemoteException ex){
-                     rd = request.getRequestDispatcher("paginas/rrhh//list.jsp");
+                     rd = request.getRequestDispatcher("paginas/rrhh/list.jsp");
                      request.setAttribute("rrhhListObj", null);
                      request.setAttribute("error", "Ha ocurrido un error en el servidor. Disculpe las molestias :( ");
 
@@ -171,7 +172,7 @@ public class RrhhController extends HttpServlet {
                     }
                 }
                 catch(RemoteException ex){
-                     rd = request.getRequestDispatcher("paginas/rrhh//list.jsp");
+                     rd = request.getRequestDispatcher("paginas/rrhh/list.jsp");
                      request.setAttribute("rrhhListObj", null);
                      request.setAttribute("error", "Ha ocurrido un error en el servidor. Disculpe las molestias :( ");
 
@@ -182,7 +183,7 @@ public class RrhhController extends HttpServlet {
                                     "=> Error al intentar validar el usuario. Detalle: " + ex.getMessage()));
                 }
                 catch(Exception ex){
-                     rd = request.getRequestDispatcher("paginas/rrhh//list.jsp");
+                     rd = request.getRequestDispatcher("paginas/rrhh/list.jsp");
                      request.setAttribute("rrhhListObj", null);
                      request.setAttribute("error", "Ha ocurrido un error durante la solicitud. Por favor, intentelo nuevamente");
 
