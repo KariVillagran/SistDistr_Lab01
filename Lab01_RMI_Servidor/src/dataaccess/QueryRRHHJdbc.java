@@ -53,20 +53,20 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
        if(p_Obj != null){
             List<String> whereClausesList = new ArrayList<String>();
 
-            if(p_Obj.GetNombrePersona() != null){
-                whereClausesList.add("nombrepersona like '%" + p_Obj.GetNombrePersona() + "%'");
+            if(!p_Obj.GetNombrePersona().equals("")){
+                whereClausesList.add("upper(nombrepersona) like upper('%" + p_Obj.GetNombrePersona() + "%')");
             }
-            if(p_Obj.GetDepartamento() != null){
-                whereClausesList.add("departamento like '%" + p_Obj.GetDepartamento()+ "%'");
+            if(!p_Obj.GetDepartamento().equals("")){
+                whereClausesList.add("upper(departamento) like upper('%" + p_Obj.GetDepartamento()+ "%')");
             }
-            if(p_Obj.GetDireccion() != null){
-                whereClausesList.add("direccion like '%" + p_Obj.GetDireccion()+ "%'");
+            if(!p_Obj.GetDireccion().equals("")){
+                whereClausesList.add("upper(direccion) like ('%" + p_Obj.GetDireccion()+ "%')");
             }
             if(p_Obj.GetRegion() != null){
-                whereClausesList.add("region like '%" + p_Obj.GetRegion()+ "%'");
+                whereClausesList.add("upper(region) like upper('%" + p_Obj.GetRegion()+ "%')");
             }
             if(p_Obj.GetComuna() != null){
-                whereClausesList.add("comuna like '%" + p_Obj.GetComuna() + "%'");
+                whereClausesList.add("upper(comuna) like upper('%" + p_Obj.GetComuna() + "%')");
             }
             
             if(whereClausesList.size() > 0){
