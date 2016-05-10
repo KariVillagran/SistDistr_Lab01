@@ -32,7 +32,7 @@
              currentMenu += "<ul class=\"nav nav-sidebar\">";
              currentMenu += "<li><a href=\"#\">Recursos Humanos</a></li>";
              currentMenu += "<li><a href=\"" + request.getContextPath() + "/RrhhController?action=lista\">Lista de Datos</a></li>";
-             currentMenu += "<li><a href=\"" + request.getContextPath() + "/RrhhController?action=crear\">Crear</a></li>";
+             currentMenu += "<li><a href=\"" + request.getContextPath() + "/RrhhController?action=nuevo\">Crear</a></li>";
              currentMenu += "</ul>";
          }
          
