@@ -286,6 +286,16 @@
                     ]
                 });
             }
+            
+            $(document).ready(function() {
+                var _msjError = '${requestScope['error']}';
+                if(_msjError != ''){
+                    ShowMessageDialog('alert-danger', 'Lab01 - Error', _msjError);
+                }
+                else{
+                    CleanMessageDialog();
+                }
+            });
         </script>
         
         <div class="modal fade">
@@ -332,7 +342,8 @@
                       </a>
                   </p>
                   <div style="display:none">
-                      <form action="LogoutController" method="post">
+                      <form action="${pageContext.request.contextPath}/LoginController" method="post">
+                        <input type="hidden" name="action" value="Logout">
                         <input id="btnCerrarSesion" type="submit" value="[x]">
                       </form>
                   </div>

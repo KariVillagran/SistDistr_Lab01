@@ -239,6 +239,8 @@
                         <label for="password" class="sr-only">Contrase&ntilde;a:</label>
                         <input type="password" id="txtPassword" name="password" class="form-control" placeholder="Contraseña">
                         
+                        <input type="hidden" name="action" value="Login">
+                        
                         <input type="submit" id="btnIngresar" value="Ingresar" class="btn btn-lg btn-danger btn-block">
                     </fieldset>
                 </div>
