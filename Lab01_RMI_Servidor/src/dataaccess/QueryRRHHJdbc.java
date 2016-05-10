@@ -351,7 +351,7 @@ public class QueryRRHHJdbc implements IRecursoHumanoRMI{
         String sql="UPDATE public.recursohumano " +
         " SET  nombrepersona='"+p_Obj.GetNombrePersona()+"', fchnacimiento='"+p_Obj.GetFchNacimiento()+"', direccion='"+p_Obj.GetDireccion()+"', comuna='"+p_Obj.GetComuna()+"'," +
         " region='"+p_Obj.GetRegion()+"', email='"+p_Obj.GetEmail()+"', telefono='"+p_Obj.GetTelefono()+"', sexo='"+p_Obj.GetSexo()+"', fchcontrato='"+p_Obj.GetFchContrato()+"',"
-                + " departamento='"+p_Obj.GetDireccion()+"'"+
+                + " departamento='"+p_Obj.GetDepartamento()+"'"+
         " WHERE id="+p_Obj.GetId()+";";
         System.out.println("dataaccess.LoginDA.ValidarUsuario sql="+sql);
 
