@@ -16,11 +16,12 @@ import java.util.List;
  */
 public interface IFinanzaRMI extends Remote{
     // Metodo para obtener una finanza de acuerdo a un determinado Id
-    public FinanzaDTO GetFinanzaById(int p_Id) throws RemoteException;
+    public FinanzaDTO GetFinanzaById(int p_Id) throws Exception;
     // Metodo para obtener una lista de finanzas de acuerdo a un determinado filtro
-    public List<FinanzaDTO> GetListaFinanzasByFiltro(FinanzaDTO p_Filtro) throws RemoteException;
+    public List<FinanzaDTO> GetListaFinanzasAll() throws Exception;
     // Metodo para insertar una finanza
-    public boolean InsertarFinanza(FinanzaDTO p_Obj) throws RemoteException;
+    public boolean InsertarFinanza(FinanzaDTO p_Obj) throws Exception;
     // Metodo para actualziar una finanza
-    public boolean UpdateFinanza(FinanzaDTO p_Obj) throws RemoteException;
+    public boolean UpdateFinanza(FinanzaDTO p_Obj) throws Exception;
+    public boolean deleteFinanza (FinanzaDTO p_Obj) throws Exception;
 }

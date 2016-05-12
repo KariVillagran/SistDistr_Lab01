@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<properties>
-    <property key="vlrConnString">jdbc:postgresql://127.0.0.1/prueba?user=postgres&amp;password=Ayuda123</property>
-</properties>
